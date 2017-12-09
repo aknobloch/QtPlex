@@ -1,31 +1,15 @@
 import QtQuick 2.3
 import QtQuick.Window 2.2
+import QtWebEngine 1.5
 
 Window {
     visible: true
-    width: 640
-    height: 480
-    title: qsTr("Hello World")
+    width: 1024
+    height: 768
+    title: qsTr("QtPlex")
 
-    MouseArea {
+    WebEngineView {
         anchors.fill: parent
-        onClicked: {
-            console.log(qsTr('Clicked on background. Text: "' + textEdit.text + '"'))
-        }
-    }
-
-    TextEdit {
-        id: textEdit
-        text: qsTr("Enter some text...")
-        verticalAlignment: Text.AlignVCenter
-        anchors.top: parent.top
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.topMargin: 20
-        Rectangle {
-            anchors.fill: parent
-            anchors.margins: -10
-            color: "transparent"
-            border.width: 1
-        }
+        url: "http://192.168.1.100:32400/web"
     }
 }
