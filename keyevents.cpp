@@ -71,6 +71,8 @@ void KeyEventController::handleKeyPressed(const Key &keyPressed)
 		qInfo() << "Page not loaded succesfully, ignoring key press.";
 		return;
 	}
+
+
 }
 
 Q_DECLARE_METATYPE(Key)
