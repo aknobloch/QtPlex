@@ -2,8 +2,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QtWebEngine/QtWebEngine>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
 #include <keyevents.h>
 
 using namespace std;

@@ -3,14 +3,51 @@
 #include <QDebug>
 #include <QObject>
 #include <QThread>
-#include <QX11Info>
 
 void KeyEventThread::run()
 {
 	qDebug() << "Key event service started!";
 
-	Key result("Dummy Key", 1);
-	emit resultReady(result);
+	Display*    dpy     = XOpenDisplay(0);
+	Window      root    = DefaultRootWindow(dpy);
+	XEvent      event;
+
+	// initial grab for media keys
+	grabKeys(dpy, root);
+
+	// TODO destructor boolean control
+	while(true)
+	{
+		XNextEvent(dpy, &event);
+
+		// grab again for future events
+		// TODO: is this neccessary? No other examples do this but doesn't persist grabs if not
+		grabKeys(dpy, root);
+
+		switch(event.type)
+		{
+			case KeyPress:
+
+				Key pressed_key = keyManager.getKey(event.xkey.keycode);
+				emit resultReady(pressed_key);
+		}
+	}
+}
+
+void KeyEventThread::grabKeys(Display *display, Window &grab_window)
+{
+	unsigned int    modifiers       = AnyModifier;
+	Bool            owner_events    = False;
+	int             pointer_mode    = GrabModeAsync;
+	int             keyboard_mode   = GrabModeAsync;
+
+	vector<Key> keys = keyManager.getMediaKeys();
+
+	for(vector<Key>::iterator it = keys.begin(); it < keys.end(); it++)
+	{
+		Key next_key = *it;
+		XGrabKey(display, next_key.getKeyCode(), modifiers, grab_window, owner_events, pointer_mode, keyboard_mode);
+	}
 }
 
 void KeyEventController::handleResults(const Key &keyPressed)
