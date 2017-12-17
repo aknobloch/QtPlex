@@ -55,7 +55,7 @@ void KeyEventThread::grabKeys(Display *display, Window &grab_window)
 
 KeyEventController::KeyEventController(QWebEngineView *view)
 {
-
+	this -> plexWebView = view;
 }
 
 void KeyEventController::handleResults(const Key &keyPressed)
