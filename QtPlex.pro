@@ -3,6 +3,7 @@ TEMPLATE = app
 QT += qml quick
 QT += webengine
 QT += core
+QT += x11extras
 
 CONFIG += c++11
 

@@ -3,13 +3,13 @@
 #include <QDebug>
 #include <QObject>
 #include <QThread>
+#include <QX11Info>
 
 void KeyEventThread::run()
 {
 	qDebug() << "Key event service started!";
 
 	Key result("Dummy Key", 1);
-
 	emit resultReady(result);
 }
 
