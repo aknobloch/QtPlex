@@ -23,10 +23,6 @@ void KeyEventThread::run()
 	{
 		XNextEvent(dpy, &event);
 
-		// grab again for future events
-		// TODO: is this neccessary? No other examples do this but doesn't persist grabs if not
-		grabKeys(dpy, root);
-
 		switch(event.type)
 		{
 			case KeyPress:
