@@ -6,7 +6,8 @@ QT += core
 
 CONFIG += c++11
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    keyevents.cpp
 
 RESOURCES += qml.qrc
 
@@ -33,6 +34,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    webdisplay.h
+    webdisplay.h \
+    keyevents.h
 
 unix|win32: LIBS += -lX11

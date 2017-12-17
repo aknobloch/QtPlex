@@ -5,6 +5,8 @@
 #include <iostream>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+#include <keyevents.h>
+
 using namespace std;
 
 int main(int argc, char *argv[])
@@ -21,5 +23,8 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    return app.exec();
+	KeyEventController runner;
+	runner.startKeyEventService();
+
+	return app.exec();
 }
