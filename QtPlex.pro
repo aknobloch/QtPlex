@@ -35,6 +35,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     webdisplay.h \
-    keyevents.h
+    keyevents.h \
+    mediakeys.h
 
 unix|win32: LIBS += -lX11
