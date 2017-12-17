@@ -36,6 +36,7 @@ class KeyEventController : public QObject
 
 	public slots:
 		void handleKeyPressed(const Key &keyPressed);
+		void pageLoaded(int loadSuccessful);
 };
 
 #endif // KEYEVENTTHREAD_H
