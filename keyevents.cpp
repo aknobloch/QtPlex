@@ -52,17 +52,25 @@ void KeyEventThread::grabKeys(Display *display, Window &grab_window)
 KeyEventController::KeyEventController(QWebEngineView *view)
 {
 	this -> plexWebView = view;
+	this -> pageReady = 0;
 	connect(plexWebView, &QWebEngineView::loadFinished, this, &KeyEventController::pageLoaded);
 }
 
 void KeyEventController::pageLoaded(int loadSuccessful)
 {
 	qInfo() << "Page loaded, status" << loadSuccessful;
+	this -> pageReady = loadSuccessful;
 }
 
 void KeyEventController::handleKeyPressed(const Key &keyPressed)
 {
 	qInfo() << "Event " << keyPressed.getName() << " registered.";
+
+	if(this -> pageReady != 1)
+	{
+		qInfo() << "Page not loaded succesfully, ignoring key press.";
+		return;
+	}
 }
 
 Q_DECLARE_METATYPE(Key)

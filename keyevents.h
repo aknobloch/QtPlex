@@ -29,6 +29,7 @@ class KeyEventController : public QObject
 
 	private:
 		QWebEngineView *plexWebView;
+		int pageReady;
 
 	public:
 		KeyEventController(QWebEngineView *view);
