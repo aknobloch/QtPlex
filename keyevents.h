@@ -1,10 +1,10 @@
 #ifndef KEYEVENTTHREAD_H
 #define KEYEVENTTHREAD_H
 
-#include <QThread>
+#include <QtWebEngine/QtWebEngine>
+#include <QWebEngineView>
 #include <QObject>
-#include <QX11Info>
-#include <qtextstream.h>
+#include <QThread>
 #include <X11/Xlib.h>
 #include <mediakeys.h>
 
@@ -28,6 +28,7 @@ class KeyEventController : public QObject
 	Q_OBJECT
 
 	public:
+		KeyEventController(QWebEngineView *view);
 		void startKeyEventService();
 
 	public slots:

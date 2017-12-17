@@ -1,6 +1,6 @@
-#include <mediakeys.h>
 #include <QString>
 #include <QDebug>
+#include <mediakeys.h>
 
 Key::Key(QString name, int keycode) : m_name(name), m_keycode(keycode) {}
 

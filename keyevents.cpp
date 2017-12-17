@@ -1,8 +1,11 @@
-#include <keyevents.h>
-#include <mediakeys.h>
-#include <QDebug>
+
+#include <QtWebEngine/QtWebEngine>
+#include <QWebEngineView>
 #include <QObject>
 #include <QThread>
+#include <QDebug>
+#include <keyevents.h>
+#include <mediakeys.h>
 
 void KeyEventThread::run()
 {
@@ -48,6 +51,11 @@ void KeyEventThread::grabKeys(Display *display, Window &grab_window)
 		Key next_key = *it;
 		XGrabKey(display, next_key.getKeyCode(), modifiers, grab_window, owner_events, pointer_mode, keyboard_mode);
 	}
+}
+
+KeyEventController::KeyEventController(QWebEngineView *view)
+{
+
 }
 
 void KeyEventController::handleResults(const Key &keyPressed)

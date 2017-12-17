@@ -1,9 +1,9 @@
 #include <Qt>
 #include <QtWebEngine/QtWebEngine>
-#include <keyevents.h>
-#include <QDebug>
-#include <QWebEngineView>
 #include <QApplication>
+#include <QWebEngineView>
+#include <QDebug>
+#include <keyevents.h>
 
 using namespace std;
 
@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 	QWebEngineView *view = new QWebEngineView();
 	view -> setUrl(QUrl("http://192.168.1.100:32400/web"));
 
-	KeyEventController runner;
+	KeyEventController runner(view);
 	runner.startKeyEventService();
 
 	view -> show();
