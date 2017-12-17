@@ -3,6 +3,7 @@
 
 #include <QThread>
 #include <QObject>
+#include <mediakeys.h>
 
 class KeyEventThread : public QThread
 {
@@ -12,7 +13,7 @@ class KeyEventThread : public QThread
 		void run() override;
 
 	signals:
-		void resultReady(const QString &s);
+		void resultReady(const Key &keyPressed);
 };
 
 class KeyEventController : public QObject
@@ -23,7 +24,7 @@ class KeyEventController : public QObject
 		void startKeyEventService();
 
 	public slots:
-		void handleResults(const QString &s);
+		void handleResults(const Key &keyPressed);
 };
 
 #endif // KEYEVENTTHREAD_H

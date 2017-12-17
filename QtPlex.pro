@@ -7,7 +7,8 @@ QT += core
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    keyevents.cpp
+    keyevents.cpp \
+    mediakeys.cpp
 
 RESOURCES += qml.qrc
 

@@ -1,4 +1,5 @@
-#include "keyevents.h"
+#include <keyevents.h>
+#include <mediakeys.h>
 #include <QDebug>
 #include <QObject>
 #include <QThread>
@@ -7,14 +8,14 @@ void KeyEventThread::run()
 {
 	qDebug() << "Key event service started!";
 
-	QString result = "done.";
+	Key result("Dummy Key", 1);
 
 	emit resultReady(result);
 }
 
-void KeyEventController::handleResults(const QString &s)
+void KeyEventController::handleResults(const Key &keyPressed)
 {
-	qDebug() << "Event " << s << " registered.";
+	qDebug() << "Event " << keyPressed.getName() << " registered.";
 }
 
 void KeyEventController::startKeyEventService()
