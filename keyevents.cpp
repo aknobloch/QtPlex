@@ -18,8 +18,11 @@ void KeyEventController::handleResults(const Key &keyPressed)
 	qDebug() << "Event " << keyPressed.getName() << " registered.";
 }
 
+Q_DECLARE_METATYPE(Key)
 void KeyEventController::startKeyEventService()
 {
+	qRegisterMetaType<Key>();
+
 	qDebug() << "Starting key event service...";
 	KeyEventThread *eventThread = new KeyEventThread();
 	connect(eventThread, &KeyEventThread::resultReady, this, &KeyEventController::handleResults);

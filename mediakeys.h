@@ -8,14 +8,17 @@ using namespace std;
 class Key
 {
 	public:
+		Key();
+		~Key();
 		Key(QString name, int keycode);
+		Key(const Key &copy);
 
 		QString getName() const;
 		int getKeyCode() const;
 
 	private:
-		const QString m_name;
-		const int m_keycode;
+		QString m_name;
+		int m_keycode;
 };
 
 class MediaKeys

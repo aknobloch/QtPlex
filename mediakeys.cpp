@@ -4,6 +4,23 @@
 
 Key::Key(QString name, int keycode) : m_name(name), m_keycode(keycode) {}
 
+Key::Key(const Key &copy)
+{
+	this -> m_name = copy.getName();
+	this -> m_keycode = copy.getKeyCode();
+}
+
+Key::Key()
+{
+	this -> m_name = "Default Key";
+	this -> m_keycode = 0;
+}
+
+Key::~Key()
+{
+
+}
+
 QString Key::getName() const
 {
 	return this -> m_name;
