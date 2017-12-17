@@ -21,6 +21,14 @@ class Key
 		int m_keycode;
 };
 
+enum MediaKeyCodes
+{
+	STOP = 174,
+	BACK = 173,
+	PLAY_PAUSE = 172,
+	FORWARD = 171
+};
+
 class MediaKeys
 {
 	public:

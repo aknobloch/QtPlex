@@ -68,11 +68,23 @@ void KeyEventController::handleKeyPressed(const Key &keyPressed)
 
 	if(this -> pageReady != 1)
 	{
-		qInfo() << "Page not loaded succesfully, ignoring key press.";
+		qInfo() << "Page not loaded, ignoring key press.";
 		return;
 	}
 
-
+	switch(keyPressed.getKeyCode())
+	{
+		case MediaKeyCodes::STOP :
+			break;
+		case MediaKeyCodes::BACK :
+			break;
+		case MediaKeyCodes::PLAY_PAUSE :
+			break;
+		case MediaKeyCodes::FORWARD :
+			break;
+		default:
+			qDebug() << "Media key code not recognized.";
+	}
 }
 
 Q_DECLARE_METATYPE(Key)

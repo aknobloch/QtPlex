@@ -33,10 +33,10 @@ int Key::getKeyCode() const
 
 MediaKeys::MediaKeys()
 {
-	Key stop("Stop", 174);
-	Key back("Back", 173);
-	Key pause("Play/Pause", 172);
-	Key forward("Forward", 171);
+	Key stop("Stop", MediaKeyCodes::STOP);
+	Key back("Back", MediaKeyCodes::BACK);
+	Key pause("Play/Pause", MediaKeyCodes::PLAY_PAUSE);
+	Key forward("Forward", MediaKeyCodes::FORWARD);
 
 	all_media_keys.push_back(stop);
 	all_media_keys.push_back(back);
