@@ -2,6 +2,7 @@ TEMPLATE = app
 
 QT += qml quick
 QT += webengine
+QT += webenginewidgets
 QT += core
 QT += x11extras
 

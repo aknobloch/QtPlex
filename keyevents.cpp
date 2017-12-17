@@ -6,7 +6,7 @@
 
 void KeyEventThread::run()
 {
-	qDebug() << "Key event service started!";
+	qInfo() << "Key event service started!";
 
 	Display*    dpy     = XOpenDisplay(0);
 	Window      root    = DefaultRootWindow(dpy);
@@ -52,7 +52,7 @@ void KeyEventThread::grabKeys(Display *display, Window &grab_window)
 
 void KeyEventController::handleResults(const Key &keyPressed)
 {
-	qDebug() << "Event " << keyPressed.getName() << " registered.";
+	qInfo() << "Event " << keyPressed.getName() << " registered.";
 }
 
 Q_DECLARE_METATYPE(Key)
