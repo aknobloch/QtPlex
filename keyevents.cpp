@@ -32,7 +32,7 @@ void KeyEventThread::run()
 			case KeyPress:
 
 				Key pressed_key = keyManager.getKey(event.xkey.keycode);
-				emit resultReady(pressed_key);
+				emit notifyKeyPressed(pressed_key);
 		}
 	}
 }
@@ -58,7 +58,7 @@ KeyEventController::KeyEventController(QWebEngineView *view)
 	this -> plexWebView = view;
 }
 
-void KeyEventController::handleResults(const Key &keyPressed)
+void KeyEventController::handleKeyPressed(const Key &keyPressed)
 {
 	qInfo() << "Event " << keyPressed.getName() << " registered.";
 }
@@ -70,7 +70,7 @@ void KeyEventController::startKeyEventService()
 
 	qDebug() << "Starting key event service...";
 	KeyEventThread *eventThread = new KeyEventThread();
-	connect(eventThread, &KeyEventThread::resultReady, this, &KeyEventController::handleResults);
+	connect(eventThread, &KeyEventThread::notifyKeyPressed, this, &KeyEventController::handleKeyPressed);
 	connect(eventThread, &KeyEventThread::finished, eventThread, &QObject::deleteLater);
 	eventThread -> start();
 }

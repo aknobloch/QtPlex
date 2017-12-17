@@ -20,7 +20,7 @@ class KeyEventThread : public QThread
 		void grabKeys(Display *display, Window &grab_window);
 
 	signals:
-		void resultReady(const Key &keyPressed);
+		void notifyKeyPressed(const Key &keyPressed);
 };
 
 class KeyEventController : public QObject
@@ -35,8 +35,7 @@ class KeyEventController : public QObject
 		void startKeyEventService();
 
 	public slots:
-		void handleResults(const Key &keyPressed);
-
+		void handleKeyPressed(const Key &keyPressed);
 };
 
 #endif // KEYEVENTTHREAD_H
