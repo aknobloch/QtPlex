@@ -1,6 +1,4 @@
 #include <Qt>
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
 #include <QtWebEngine/QtWebEngine>
 #include <keyevents.h>
 #include <QDebug>
