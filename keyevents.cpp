@@ -75,15 +75,36 @@ void KeyEventController::handleKeyPressed(const Key &keyPressed)
 	switch(keyPressed.getKeyCode())
 	{
 		case MediaKeyCodes::STOP :
+		{
+			QString pressForward = "document.getElementsByClassName(\"stop-btn\")[0].click()";
+			plexWebView -> page() -> runJavaScript(pressForward);
+			break;
+		}
 			break;
 		case MediaKeyCodes::BACK :
+		{
+			QString pressForward = "document.getElementsByClassName(\"previous-btn\")[0].click()";
+			plexWebView -> page() -> runJavaScript(pressForward);
+			break;
+		}
 			break;
 		case MediaKeyCodes::PLAY_PAUSE :
+		{
+			QString pressForward = "document.getElementsByClassName(\"play-btn\")[0].click()";
+			plexWebView -> page() -> runJavaScript(pressForward);
+			break;
+		}
 			break;
 		case MediaKeyCodes::FORWARD :
+		{
+			QString pressForward = "document.getElementsByClassName(\"next-btn\")[0].click()";
+			plexWebView -> page() -> runJavaScript(pressForward);
 			break;
+		}
 		default:
+		{
 			qDebug() << "Media key code not recognized.";
+		}
 	}
 }
 
