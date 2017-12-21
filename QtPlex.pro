@@ -4,7 +4,7 @@ QT += qml quick
 QT += webengine
 QT += webenginewidgets
 QT += core
-QT += x11extras
+QT += gui x11extras
 
 CONFIG += c++11
 
@@ -42,3 +42,4 @@ HEADERS += \
     mediakeys.h
 
 unix|win32: LIBS += -lX11
+include(vendor/vendor.pri)
