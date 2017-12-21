@@ -3,6 +3,8 @@
 #include <QApplication>
 #include <QWebEngineView>
 #include <QDebug>
+#include <QHotkey>
+#include <QX11Info>
 #include <keyevents.h>
 
 using namespace std;
@@ -15,12 +17,10 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 
 	QWebEngineView *view = new QWebEngineView();
+	view -> setUrl(QUrl("http://192.168.1.100:32400/web"));
 
 	KeyEventController runner(view);
-	runner.startKeyEventService();
 
-	view -> setUrl(QUrl("http://192.168.1.100:32400/web"));
 	view -> show();
-
 	return app.exec();
 }
