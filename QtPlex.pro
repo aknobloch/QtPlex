@@ -43,3 +43,9 @@ HEADERS += \
 
 unix|win32: LIBS += -lX11
 include(vendor/vendor.pri)
+
+DISTFILES += \
+    executePlayPause.js \
+    executeStop.js \
+    executeBack.js \
+    executeForward.js
