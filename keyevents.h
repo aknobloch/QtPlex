@@ -4,7 +4,6 @@
 #include <QtWebEngine/QtWebEngine>
 #include <QWebEngineView>
 #include <QObject>
-#include <mediakeys.h>
 
 class KeyEventController : public QObject
 {
@@ -20,6 +19,11 @@ class KeyEventController : public QObject
 
 	public slots:
 		void pageLoaded(int loadSuccessful);
+		void executeKey(Qt::Key keyPressed);
+		void stopPressed();
+		void prevPressed();
+		void playPressed();
+		void nextPressed();
 
 };
 

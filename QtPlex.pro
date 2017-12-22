@@ -10,7 +10,7 @@ CONFIG += c++11
 
 SOURCES += main.cpp \
     keyevents.cpp \
-    mediakeys.cpp
+    javascriptloader.cpp
 
 RESOURCES += qml.qrc
 
@@ -39,7 +39,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     webdisplay.h \
     keyevents.h \
-    mediakeys.h
+    javascriptloader.h
 
 unix|win32: LIBS += -lX11
 include(vendor/vendor.pri)
@@ -47,5 +47,5 @@ include(vendor/vendor.pri)
 DISTFILES += \
     executePlayPause.js \
     executeStop.js \
-    executeBack.js \
-    executeForward.js
+    executeForward.js \
+    executePrevious.js
