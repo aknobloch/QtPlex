@@ -45,6 +45,7 @@ void KeyEventController::executeKey(Qt::Key keyPressed)
 	}
 
 	QString javaScript = JavaScriptLoader::loadScript(keyPressed);
+	plexWebView->page()->runJavaScript(javaScript);
 }
 
 void KeyEventController::stopPressed()
