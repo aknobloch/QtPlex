@@ -12,9 +12,11 @@ Currently, QtPlex is stable with core functionality, but still in development. I
 
 ### Goals
 * Abstract the IP address for the server into a proper setting. 
-* Cross-platform testing needs to be done,
-* Adding support for Windows media key shortcuts. 
-* Officially packaged distributable will be made.  
+* Icons for Linux and Windows
+* Officially packaged distributable will be made.
+* Cross-platform testing needs to be done, possibly w/ Selenium.
+* Adding support for Windows media key shortcuts.
+* OS notifications re: song playback
 
 ------
 ### Acknowledgments
