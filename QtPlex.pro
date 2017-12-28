@@ -10,7 +10,8 @@ CONFIG += c++11
 
 SOURCES += main.cpp \
     keyevents.cpp \
-    javascriptloader.cpp
+    javascriptloader.cpp \
+    optionsdialog.cpp
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -37,7 +38,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     webdisplay.h \
     keyevents.h \
-    javascriptloader.h
+    javascriptloader.h \
+    optionsdialog.h
 
 unix|win32: LIBS += -lX11
 include(vendor/vendor.pri)
