@@ -21,6 +21,6 @@ int main(int argc, char *argv[])
 
 	KeyEventController runner(view);
 
-	view -> show();
+	view -> showMaximized();
 	return app.exec();
 }
