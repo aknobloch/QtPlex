@@ -9,30 +9,34 @@
 
 ApplicationWindow::ApplicationWindow(QWidget *parent) : QMainWindow(parent)
 {
+	initializeCentralWidget();
+}
+
+
+void ApplicationWindow::initializeCentralWidget()
+{
 	QSettings settings;
 	QString serverAddress = settings.value(SERVER_ADDRESS_KEY).toString();
 
 	// If server address setting has not yet been defined
-	if(serverAddress == 0)
-	{
-		OptionsDialog options;
-		int result = options.exec();
-
-		if(result == QDialog::Rejected)
-		{
-			serverAddress = QString(); // null string
-		}
-		else
-		{
-			serverAddress = settings.value(SERVER_ADDRESS_KEY).toString();
-		}
-	}
-
 	if(serverAddress.isNull())
 	{
-		throw;
+		setHelpWindow();
 	}
+	else
+	{
+		setPlexView(serverAddress);
+	}
+}
 
+void ApplicationWindow::setHelpWindow()
+{
+	OptionsDialog options;
+	int result = options.exec();
+}
+
+void ApplicationWindow::setPlexView(QString serverAddress)
+{
 	QWebEngineView *view = new QWebEngineView();
 	view -> setUrl(QUrl(serverAddress));
 

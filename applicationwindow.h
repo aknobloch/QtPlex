@@ -9,6 +9,11 @@ class ApplicationWindow : public QMainWindow
 	public:
 		ApplicationWindow(QWidget *parent = nullptr);
 
+	private:
+		void initializeCentralWidget();
+		void setHelpWindow();
+		void setPlexView(QString serverAddress);
+
 	signals:
 
 	public slots:
