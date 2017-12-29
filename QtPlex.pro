@@ -39,7 +39,8 @@ HEADERS += \
     webdisplay.h \
     keyevents.h \
     javascriptloader.h \
-    optionsdialog.h
+    optionsdialog.h \
+    constants.h
 
 unix|win32: LIBS += -lX11
 include(vendor/vendor.pri)

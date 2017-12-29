@@ -14,11 +14,9 @@ class OptionsDialog : public QDialog
 		void initializeLayout();
 
 	private:
-		QLineEdit *serverIP;
-		QLineEdit *serverPort;
+		QLineEdit *serverAddress;
 
 		QFormLayout * createServerInfoForm();
-		QString getServerAddress();
 
 	public slots:
 		void okPressed();

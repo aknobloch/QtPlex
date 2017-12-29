@@ -3,7 +3,9 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QDialogButtonBox>
+#include <QSettings>
 #include "optionsdialog.h"
+#include "constants.h"
 
 #include <QDebug>
 
@@ -25,17 +27,18 @@ void OptionsDialog::initializeLayout()
 	parentLayout -> addWidget(confirmButtons);
 
 	setLayout(parentLayout);
+	resize(325, 50);
 }
 
 QFormLayout * OptionsDialog::createServerInfoForm()
 {
 	QFormLayout *serverForm = new QFormLayout;
 
-	this -> serverIP = new QLineEdit;
-	this -> serverPort = new QLineEdit;
+	this -> serverAddress = new QLineEdit;
 
-	serverForm -> addRow(new QLabel(tr("Server IP Address:")), serverIP);
-	serverForm -> addRow(new QLabel(tr("Server Port:")), serverPort);
+	serverAddress -> setText(tr("http://192.168.1.25:32400/web"));
+
+	serverForm -> addRow(new QLabel(tr("Server Address:")), serverAddress);
 
 	serverForm -> setHorizontalSpacing(10);
 	serverForm -> setVerticalSpacing(5);
@@ -45,10 +48,11 @@ QFormLayout * OptionsDialog::createServerInfoForm()
 
 void OptionsDialog::okPressed()
 {
-	qInfo() << getServerAddress();
+	QString enteredAddress = serverAddress -> text();
+
+	QSettings settings;
+	settings.setValue(SERVER_ADDRESS_KEY, enteredAddress);
+
+	accept();
 }
 
-QString OptionsDialog::getServerAddress()
-{
-	return serverIP -> text() + ":" + serverPort -> text();
-}
