@@ -12,7 +12,8 @@ SOURCES += main.cpp \
     keyevents.cpp \
     javascriptloader.cpp \
     optionsdialog.cpp \
-    applicationwindow.cpp
+    applicationwindow.cpp \
+    configserverhelp.cpp
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -42,7 +43,8 @@ HEADERS += \
     javascriptloader.h \
     optionsdialog.h \
     constants.h \
-    applicationwindow.h
+    applicationwindow.h \
+    configserverhelp.h
 
 unix|win32: LIBS += -lX11
 include(vendor/vendor.pri)
@@ -52,3 +54,6 @@ DISTFILES += \
     executeStop.js \
     executeForward.js \
     executePrevious.js
+
+RESOURCES += \
+    resources.qrc

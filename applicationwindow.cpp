@@ -6,10 +6,12 @@
 #include "optionsdialog.h"
 #include "constants.h"
 #include "applicationwindow.h"
+#include "configserverhelp.h"
 
 ApplicationWindow::ApplicationWindow(QWidget *parent) : QMainWindow(parent)
 {
 	initializeCentralWidget();
+	setStyleSheet("background-color:rgb(31,31,31)");
 }
 
 
@@ -25,14 +27,18 @@ void ApplicationWindow::initializeCentralWidget()
 	}
 	else
 	{
+		setWindowState(Qt::WindowMaximized);
 		setPlexView(serverAddress);
 	}
 }
 
 void ApplicationWindow::setHelpWindow()
 {
-	OptionsDialog options;
-	int result = options.exec();
+
+	ConfigServerHelpScreen *help = new ConfigServerHelpScreen();
+	connect(help, &ConfigServerHelpScreen::notifyConfigButtonPressed, this, &ApplicationWindow::showOptionsDialog);
+
+	setCentralWidget(help);
 }
 
 void ApplicationWindow::setPlexView(QString serverAddress)
@@ -43,4 +49,34 @@ void ApplicationWindow::setPlexView(QString serverAddress)
 	KeyEventController runner(view);
 
 	setCentralWidget(view);
+}
+
+void ApplicationWindow::show()
+{
+	if(showingHelpScreen())
+	{
+		showNormal();
+	}
+	else
+	{
+		showMaximized();
+	}
+}
+
+void ApplicationWindow::showOptionsDialog()
+{
+	OptionsDialog options;
+	int result = options.exec();
+
+	initializeCentralWidget();
+}
+
+bool ApplicationWindow::showingHelpScreen()
+{
+	if(ConfigServerHelpScreen *test = dynamic_cast<ConfigServerHelpScreen*>(centralWidget()))
+	{
+		return true;
+	}
+
+	return false;
 }
