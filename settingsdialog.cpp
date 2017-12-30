@@ -4,23 +4,23 @@
 #include <QLineEdit>
 #include <QDialogButtonBox>
 #include <QSettings>
-#include "optionsdialog.h"
+#include "settingsdialog.h"
 #include "constants.h"
 
 #include <QDebug>
 
-OptionsDialog::OptionsDialog()
+SettingsDialog::SettingsDialog()
 {
 	initializeLayout();
 	setWindowTitle(tr("Plex Server Info"));
 }
 
-void OptionsDialog::initializeLayout()
+void SettingsDialog::initializeLayout()
 {
 	QFormLayout *serverInfoForm = createServerInfoForm();
 
 	QDialogButtonBox *confirmButtons = new QDialogButtonBox(QDialogButtonBox::Ok);
-	connect(confirmButtons, &QDialogButtonBox::accepted, this, &OptionsDialog::okPressed);
+	connect(confirmButtons, &QDialogButtonBox::accepted, this, &SettingsDialog::okPressed);
 
 	QVBoxLayout *parentLayout = new QVBoxLayout();
 	parentLayout -> addItem(serverInfoForm);
@@ -30,13 +30,24 @@ void OptionsDialog::initializeLayout()
 	resize(325, 50);
 }
 
-QFormLayout * OptionsDialog::createServerInfoForm()
+QFormLayout * SettingsDialog::createServerInfoForm()
 {
 	QFormLayout *serverForm = new QFormLayout;
 
 	this -> serverAddress = new QLineEdit;
 
-	serverAddress -> setText(tr("http://192.168.1.25:32400/web"));
+	QSettings settings;
+	QString userServerAddress = settings.value(SERVER_ADDRESS_KEY).toString();
+
+	if(userServerAddress.isNull())
+	{
+		serverAddress -> setText(tr("http://192.168.1.25:32400/web"));
+	}
+	else
+	{
+		serverAddress -> setText(userServerAddress);
+	}
+
 
 	serverForm -> addRow(new QLabel(tr("Server Address:")), serverAddress);
 
@@ -46,7 +57,7 @@ QFormLayout * OptionsDialog::createServerInfoForm()
 	return serverForm;
 }
 
-void OptionsDialog::okPressed()
+void SettingsDialog::okPressed()
 {
 	QString enteredAddress = serverAddress -> text();
 

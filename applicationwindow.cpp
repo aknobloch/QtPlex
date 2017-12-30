@@ -2,18 +2,28 @@
 #include <QtWebEngine/QtWebEngine>
 #include <QWebEngineView>
 #include <QInputDialog>
+#include <QMenuBar>
 #include "keyevents.h"
-#include "optionsdialog.h"
+#include "settingsdialog.h"
 #include "constants.h"
 #include "applicationwindow.h"
 #include "configserverhelp.h"
 
 ApplicationWindow::ApplicationWindow(QWidget *parent) : QMainWindow(parent)
 {
+	initializeMenuBar();
 	initializeCentralWidget();
 	setStyleSheet("background-color:rgb(31,31,31)");
 }
 
+void ApplicationWindow::initializeMenuBar()
+{
+	QMenu *file = new QMenu("File");
+	file -> addAction("Settings", this, &ApplicationWindow::showSettingsDialog);
+
+	menuBar() -> setStyleSheet("background-color:rgb(244,244,244)");
+	menuBar() -> addMenu(file);
+}
 
 void ApplicationWindow::initializeCentralWidget()
 {
@@ -35,7 +45,7 @@ void ApplicationWindow::initializeCentralWidget()
 void ApplicationWindow::setHelpWindow()
 {
 	ConfigServerHelpScreen *help = new ConfigServerHelpScreen();
-	connect(help, &ConfigServerHelpScreen::notifyConfigButtonPressed, this, &ApplicationWindow::showOptionsDialog);
+	connect(help, &ConfigServerHelpScreen::notifyConfigButtonPressed, this, &ApplicationWindow::showSettingsDialog);
 
 	setCentralWidget(help);
 }
@@ -62,12 +72,15 @@ void ApplicationWindow::show()
 	}
 }
 
-void ApplicationWindow::showOptionsDialog()
+void ApplicationWindow::showSettingsDialog()
 {
-	OptionsDialog options;
+	SettingsDialog options;
 	int result = options.exec();
 
-	initializeCentralWidget();
+	if(showingHelpScreen())
+	{
+		initializeCentralWidget();
+	}
 }
 
 bool ApplicationWindow::showingHelpScreen()

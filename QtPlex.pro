@@ -11,9 +11,9 @@ CONFIG += c++11
 SOURCES += main.cpp \
     keyevents.cpp \
     javascriptloader.cpp \
-    optionsdialog.cpp \
     applicationwindow.cpp \
-    configserverhelp.cpp
+    configserverhelp.cpp \
+    settingsdialog.cpp
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -41,10 +41,10 @@ HEADERS += \
     webdisplay.h \
     keyevents.h \
     javascriptloader.h \
-    optionsdialog.h \
     constants.h \
     applicationwindow.h \
-    configserverhelp.h
+    configserverhelp.h \
+    settingsdialog.h
 
 unix|win32: LIBS += -lX11
 include(vendor/vendor.pri)

@@ -5,12 +5,12 @@
 #include <QLineEdit>
 #include <QFormLayout>
 
-class OptionsDialog : public QDialog
+class SettingsDialog : public QDialog
 {
 		Q_OBJECT
 
 	public:
-		OptionsDialog();
+		SettingsDialog();
 		void initializeLayout();
 
 	private:

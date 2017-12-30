@@ -15,6 +15,7 @@ class ApplicationWindow : public QMainWindow
 	private:
 		KeyEventController *shortcutController;
 
+		void initializeMenuBar();
 		void initializeCentralWidget();
 		void setHelpWindow();
 		void setPlexView(QString serverAddress);
@@ -23,7 +24,7 @@ class ApplicationWindow : public QMainWindow
 	signals:
 
 	public slots:
-		void showOptionsDialog();
+		void showSettingsDialog();
 };
 
 #endif // APPLICATIONWINDOW_H
