@@ -34,7 +34,6 @@ void ApplicationWindow::initializeCentralWidget()
 
 void ApplicationWindow::setHelpWindow()
 {
-
 	ConfigServerHelpScreen *help = new ConfigServerHelpScreen();
 	connect(help, &ConfigServerHelpScreen::notifyConfigButtonPressed, this, &ApplicationWindow::showOptionsDialog);
 

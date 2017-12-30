@@ -17,14 +17,22 @@ void ConfigServerHelpScreen::initializeLayout()
 
 	QLabel *bannerLabel = createBanner();
 	QLabel *infoLabel = createInfoLabel();
+
+	QHBoxLayout *buttonWrapper = new QHBoxLayout();
 	QPushButton *configButton = createConfigButton();
+
+	buttonWrapper->addWidget(configButton);
+	buttonWrapper->setContentsMargins(0,75,0,0);
 
 	parentLayout -> addWidget(bannerLabel);
 	parentLayout -> addWidget(infoLabel);
-	parentLayout -> addWidget(configButton);
+	parentLayout -> addItem(buttonWrapper);
 
 	parentLayout -> setAlignment(bannerLabel, Qt::AlignHCenter | Qt::AlignTop);
 	parentLayout -> setAlignment(infoLabel, Qt::AlignHCenter | Qt::AlignTop);
+	parentLayout -> setAlignment(buttonWrapper, Qt::AlignHCenter | Qt::AlignTop);
+
+	parentLayout -> setContentsMargins(50, 10, 50, 25);
 
 	setLayout(parentLayout);
 }
@@ -51,7 +59,26 @@ QLabel* ConfigServerHelpScreen::createInfoLabel()
 QPushButton* ConfigServerHelpScreen::createConfigButton()
 {
 	QPushButton *configButton = new QPushButton();
+
+	// text properties
 	configButton -> setText("Config Server");
+	QFont buttonFont("Arial", 18, QFont::Bold);
+	buttonFont.setCapitalization(QFont::SmallCaps);
+	configButton -> setFont(buttonFont);
+
+	// button style
+	QString roundedButtonStyle =    "background-color:rgb(244,244,244);"
+									"border-radius:10px;"
+									"border-width:25px;"
+									"border-color:red;";
+	configButton -> setStyleSheet(roundedButtonStyle);
+
+	// placement and size
+	configButton -> setMinimumWidth(200);
+	configButton -> setMinimumHeight(75);
+	configButton -> setContentsMargins(100,100,100,100);
+
+	configButton -> setFocusPolicy(Qt::NoFocus);
 
 	connect(configButton, &QPushButton::clicked, this, &ConfigServerHelpScreen::configButtonPressed);
 
