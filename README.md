@@ -11,9 +11,9 @@ QtPlex is a cross-platform media player, based on [Plex](https://www.plex.tv/) h
 Currently, QtPlex is stable with core functionality, but still in development. I hope to have a packaged release shortly, but for now you must download QtCreator and run the project through the build button. Alternatively, you should be able to use qmake from the command line, via `qmake QtPlex.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug`. **In order to access your server, you will need to change the IP address, located in the main.cpp file.**
 
 ### Goals
-* ~~Abstract the IP address for the server into a proper setting.~~ 12/30/2017
 * Icons for Linux and Windows
 * Officially packaged distributable will be made.
+* About page w/ link to repository and credits.
 * Cross-platform testing needs to be done, possibly w/ Selenium.
 * Adding support for Windows media key shortcuts.
 * OS notifications re: song playback
