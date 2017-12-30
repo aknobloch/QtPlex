@@ -46,7 +46,7 @@ void ApplicationWindow::setPlexView(QString serverAddress)
 	QWebEngineView *view = new QWebEngineView();
 	view -> setUrl(QUrl(serverAddress));
 
-	KeyEventController runner(view);
+	shortcutController = new KeyEventController(view);
 
 	setCentralWidget(view);
 }
