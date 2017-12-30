@@ -17,6 +17,7 @@ Currently, QtPlex is stable with core functionality, but still in development. I
 * Cross-platform testing needs to be done, possibly w/ Selenium.
 * Adding support for Windows media key shortcuts.
 * OS notifications re: song playback
+* Support for video streaming (could require codec licenses)
 
 ------
 ### Acknowledgments
