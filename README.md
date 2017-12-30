@@ -1,7 +1,7 @@
 # QtPlex
 
 ### About
-QtPlex is a cross-platform media player, based on [Plex](https://www.plex.tv/) home server and the [Qt](https://www.qt.io/) framework. The main motivation behind QtPlex was to provide a stable, modern interface into Plex without sacrificing functionality. Most notably, existing solutions for Plex interfaces lack support for media playback keys. Additionally, the support for any Plex interface on Linux machines is sorely lacking, both in features and support. With this in mind, QtPlex was created as an interface into the Plex web client. This allows for low-level control over things such as keyboard shortcuts, while taking advantage of the officially maintained web interface.
+QtPlex is a cross-platform media player, based on [Plex](https://www.plex.tv/) home server and the [Qt](https://www.qt.io/) framework. The main motivation behind QtPlex was to provide a stable, modern interface into Plex without sacrificing functionality. Most notably, existing solutions for Plex interfaces lack support for media playback keys. Additionally, available Plex interfaces on Linux machines are sorely lacking, both in features and support. With this in mind, QtPlex was created as an interface into the Plex web client. This allows for low-level control over things such as keyboard shortcuts, while taking advantage of the officially maintained web interface, all while being cross-platform ready.
 
 ### Prerequisites
 * Accessible server running Plex. 
@@ -12,9 +12,11 @@ Currently, QtPlex is stable with core functionality, but still in development. I
 
 ### Goals
 * Abstract the IP address for the server into a proper setting. 
-* Cross-platform testing needs to be done,
-* Adding support for Windows media key shortcuts. 
-* Officially packaged distributable will be made.  
+* Icons for Linux and Windows
+* Officially packaged distributable will be made.
+* Cross-platform testing needs to be done, possibly w/ Selenium.
+* Adding support for Windows media key shortcuts.
+* OS notifications re: song playback
 
 ------
 ### Acknowledgments
