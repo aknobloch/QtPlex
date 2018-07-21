@@ -78,7 +78,7 @@ void ApplicationWindow::showSettingsDialog()
 	QString oldServerAddress = settings.value(SERVER_ADDRESS_KEY).toString();
 
 	SettingsDialog options;
-	int result = options.exec();
+	options.exec();
 
 	QString newServerAddress = settings.value(SERVER_ADDRESS_KEY).toString();
 	bool changedServerAdddress = oldServerAddress.compare(newServerAddress) != 0;
@@ -91,7 +91,7 @@ void ApplicationWindow::showSettingsDialog()
 
 bool ApplicationWindow::showingHelpScreen()
 {
-	if(ConfigServerHelpScreen *test = dynamic_cast<ConfigServerHelpScreen*>(centralWidget()))
+	if(dynamic_cast<ConfigServerHelpScreen*>(centralWidget()))
 	{
 		return true;
 	}
