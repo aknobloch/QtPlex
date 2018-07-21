@@ -8,12 +8,12 @@ QT += gui x11extras
 
 CONFIG += c++11
 
-SOURCES += ./src/app/main.cpp \
-    ./src/app/keyevents.cpp \
-    ./src/app/javascriptloader.cpp \
-    ./src/app/applicationwindow.cpp \
-    ./src/app/configserverhelp.cpp \
-    ./src/app/settingsdialog.cpp
+SOURCES += src/app/applicationwindow.cpp \
+    src/app/configserverhelp.cpp \
+    src/app/javascriptloader.cpp \
+    src/app/keyevents.cpp \
+    src/app/main.cpp \
+    src/app/settingsdialog.cpp
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -38,22 +38,25 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    ./include/webdisplay.h \
-    ./include/keyevents.h \
-    ./include/javascriptloader.h \
-    ./include/constants.h \
-    ./include/applicationwindow.h \
-    ./include/configserverhelp.h \
-    ./include/settingsdialog.h
+    include/webdisplay.h \
+    include/keyevents.h \
+    include/javascriptloader.h \
+    include/constants.h \
+    include/applicationwindow.h \
+    include/configserverhelp.h \
+    include/settingsdialog.h
 
 unix|win32: LIBS += -lX11
 include(vendor/vendor.pri)
 
-DISTFILES += \
-    ./src/js/executePlayPause.js \
-    ./src/js/executeStop.js \
-    ./src/js/executeForward.js \
-    ./src/js/executePrevious.js
+# Add the JavaScript source files to build output
+# Explanation of the following can be found here:
+# https://dragly.org/2013/11/05/copying-data-files-to-the-build-directory-when-working-with-qmake/
+include_js_source.commands = $(COPY_DIR) $$PWD/src/js $$OUT_PWD
+first.depends = $(first) include_js_source
+export(first.depends)
+export(include_js_source.commands)
+QMAKE_EXTRA_TARGETS += first include_js_source
 
 RESOURCES += \
     resources.qrc

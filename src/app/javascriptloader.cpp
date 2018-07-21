@@ -12,22 +12,22 @@ QString JavaScriptLoader::loadScript(Qt::Key keycode)
 	{
 		case Qt::Key_MediaStop :
 		{
-			jsFunction.setFileName("executeStop.js");
+			jsFunction.setFileName("js/executeStop.js");
 			break;
 		}
 		case Qt::Key_MediaPrevious :
 		{
-			jsFunction.setFileName("executePrevious.js");
+			jsFunction.setFileName("js/executePrevious.js");
 			break;
 		}
 		case Qt::Key_MediaPlay :
 		{
-			jsFunction.setFileName("executePlayPause.js");
+			jsFunction.setFileName("js/executePlayPause.js");
 			break;
 		}
 		case Qt::Key_MediaNext :
 		{
-			jsFunction.setFileName("executeForward.js");
+			jsFunction.setFileName("js/executeForward.js");
 			break;
 		}
 		default :
