@@ -3,11 +3,11 @@
 #include <QWebEngineView>
 #include <QInputDialog>
 #include <QMenuBar>
-#include "keyevents.h"
-#include "settingsdialog.h"
-#include "constants.h"
-#include "applicationwindow.h"
-#include "configserverhelp.h"
+#include "../../include/keyevents.h"
+#include "../../include/settingsdialog.h"
+#include "../../include/constants.h"
+#include "../../include/applicationwindow.h"
+#include "../../include/configserverhelp.h"
 
 ApplicationWindow::ApplicationWindow(QWidget *parent) : QMainWindow(parent)
 {

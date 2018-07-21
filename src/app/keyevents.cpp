@@ -4,8 +4,8 @@
 #include <QObject>
 #include <QDebug>
 #include <QHotkey>
-#include <keyevents.h>
-#include <javascriptloader.h>
+#include "../../include/keyevents.h"
+#include "../../include/javascriptloader.h"
 
 KeyEventController::KeyEventController(QWebEngineView *view)
 {

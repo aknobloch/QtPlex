@@ -8,12 +8,12 @@ QT += gui x11extras
 
 CONFIG += c++11
 
-SOURCES += main.cpp \
-    keyevents.cpp \
-    javascriptloader.cpp \
-    applicationwindow.cpp \
-    configserverhelp.cpp \
-    settingsdialog.cpp
+SOURCES += ./src/app/main.cpp \
+    ./src/app/keyevents.cpp \
+    ./src/app/javascriptloader.cpp \
+    ./src/app/applicationwindow.cpp \
+    ./src/app/configserverhelp.cpp \
+    ./src/app/settingsdialog.cpp
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -38,22 +38,22 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    webdisplay.h \
-    keyevents.h \
-    javascriptloader.h \
-    constants.h \
-    applicationwindow.h \
-    configserverhelp.h \
-    settingsdialog.h
+    ./include/webdisplay.h \
+    ./include/keyevents.h \
+    ./include/javascriptloader.h \
+    ./include/constants.h \
+    ./include/applicationwindow.h \
+    ./include/configserverhelp.h \
+    ./include/settingsdialog.h
 
 unix|win32: LIBS += -lX11
 include(vendor/vendor.pri)
 
 DISTFILES += \
-    executePlayPause.js \
-    executeStop.js \
-    executeForward.js \
-    executePrevious.js
+    ./src/js/executePlayPause.js \
+    ./src/js/executeStop.js \
+    ./src/js/executeForward.js \
+    ./src/js/executePrevious.js
 
 RESOURCES += \
     resources.qrc

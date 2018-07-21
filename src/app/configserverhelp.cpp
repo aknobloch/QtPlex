@@ -2,7 +2,7 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QPushButton>
-#include "configserverhelp.h"
+#include "../../include/configserverhelp.h"
 
 #include <QDebug>
 

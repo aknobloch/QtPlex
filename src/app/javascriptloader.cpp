@@ -1,4 +1,4 @@
-#include "javascriptloader.h"
+#include "../../include/javascriptloader.h"
 #include <QString>
 #include <QKeySequence>
 #include <QDebug>
