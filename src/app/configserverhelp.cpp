@@ -39,7 +39,7 @@ void ConfigServerHelpScreen::initializeLayout()
 
 QLabel* ConfigServerHelpScreen::createBanner()
 {
-	QImage *bannerImage = new QImage(":/images/raw resources/banner.png");
+	QImage *bannerImage = new QImage(":/images/res/banner.png");
 	QLabel *bannerLabel = new QLabel();
 	bannerLabel -> setPixmap(QPixmap::fromImage(*bannerImage));
 
