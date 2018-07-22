@@ -1,11 +1,2 @@
-var playButton = document.getElementsByClassName("play-btn")[0];
-
-if(playButton && ! playButton.classList.contains("hidden"))
-{
-    playButton.click()
-}
-else
-{
-    document.getElementsByClassName("pause-btn")[0].click()
-}
-
+var spaceKey = new KeyboardEvent('keydown',{'keyCode':32,'which':32});
+document.dispatchEvent(spaceKey)
