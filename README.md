@@ -13,15 +13,6 @@ Currently, QtPlex is stable with core functionality, but still in development. I
 ##### Proprietary Codecs
 In order to enable full functionality of the Plex web app (video and particular audio), some proprietary codecs need to be available to the QtWebEngine. Unfortunately, due to licensing, these cannot be packaged with the Qt libraries, or through this application. As such, you'll need to build the QtWebEngine from source. But, fear not! It's relatively painless. You can find more information on building QtWebEngine from source [here](http://wiki.qt.io/QtWebEngine/How_to_Try). Before running the `qmake` command in that guide, you'll need to enable the proprietary codecs using the `--webengine-proprietary-codecs` flag. More information on that can be found [here](https://doc.qt.io/qt-5.11/qtwebengine-features.html). 
 
-### Goals
-* Icons for Linux and Windows
-* Officially packaged distributable will be made.
-* About page w/ link to repository and credits.
-* Cross-platform testing needs to be done, possibly w/ Selenium.
-* Adding support for Windows media key shortcuts.
-* OS notifications re: song playback
-* Support for video streaming (could require codec licenses)
-
 ------
 ### Acknowledgments
 This project is dependent on Plex and Qt, and the hard-working developers there who build and maintain the core features that QtPlex relies on. Additionally, [QHotKey](https://github.com/Skycoder42/QHotkey) enabled the base framework for cross-platform keyboard hooks. 
