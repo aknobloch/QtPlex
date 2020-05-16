@@ -1,3 +1,5 @@
+include(third_party/QHotkey/qhotkey.pri)
+
 TEMPLATE = app
 
 QT += qml quick
@@ -47,7 +49,6 @@ HEADERS += \
     include/settingsdialog.h
 
 unix|win32: LIBS += -lX11
-include(vendor/vendor.pri)
 
 # Add the JavaScript source files to build output
 # Explanation of the following can be found here:
