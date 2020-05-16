@@ -54,6 +54,10 @@ unix|win32: LIBS += -lX11
 # Explanation of the following can be found here:
 # https://dragly.org/2013/11/05/copying-data-files-to-the-build-directory-when-working-with-qmake/
 include_js_source.commands = $(COPY_DIR) $$PWD/src/js $$OUT_PWD
+
+# Copy over the images
+include_js_source.commands = $(COPY_DIR) $$PWD/res $$OUT_PWD
+
 first.depends = $(first) include_js_source
 export(first.depends)
 export(include_js_source.commands)
