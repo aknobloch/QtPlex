@@ -1,4 +1,5 @@
 #include "../../include/javascriptloader.h"
+#include <QCoreApplication>
 #include <QString>
 #include <QKeySequence>
 #include <QDebug>
@@ -12,22 +13,22 @@ QString JavaScriptLoader::loadScript(Qt::Key keycode)
 	{
 		case Qt::Key_MediaStop :
 		{
-			jsFunction.setFileName("js/executeStop.js");
+            jsFunction.setFileName(QCoreApplication::applicationDirPath() + "/js/executeStop.js");
 			break;
 		}
 		case Qt::Key_MediaPrevious :
 		{
-			jsFunction.setFileName("js/executePrevious.js");
+            jsFunction.setFileName(QCoreApplication::applicationDirPath() + "/js/executePrevious.js");
 			break;
 		}
 		case Qt::Key_MediaPlay :
 		{
-			jsFunction.setFileName("js/executePlayPause.js");
+            jsFunction.setFileName(QCoreApplication::applicationDirPath() + "/js/executePlayPause.js");
 			break;
 		}
 		case Qt::Key_MediaNext :
 		{
-			jsFunction.setFileName("js/executeForward.js");
+            jsFunction.setFileName(QCoreApplication::applicationDirPath() + "/js/executeForward.js");
 			break;
 		}
 		default :
