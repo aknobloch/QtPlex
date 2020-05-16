@@ -1,2 +1,6 @@
-var rightArrowKey = new KeyboardEvent('keydown',{'keyCode':39,'which':39});
-document.dispatchEvent(rightArrowKey)
+var keyboardEventInit = {
+    'shiftKey' : true,
+    'keyCode': 39,
+    'which': 39
+}
+var rightArrowKey = new KeyboardEvent('keydown',keyboardEventInit);
