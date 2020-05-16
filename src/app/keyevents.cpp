@@ -7,13 +7,14 @@
 #include "../../include/keyevents.h"
 #include "../../include/javascriptloader.h"
 
-KeyEventController::KeyEventController(QWebEngineView *view)
+KeyEventController::~KeyEventController() = default;
+
+KeyEventController::KeyEventController(QWebEnginePage *page)
 {
-	this -> plexWebView = view;
+    this -> plexWebPage = page;
 	this -> pageReady = 0;
 
-	connect(plexWebView, &QWebEngineView::loadFinished, this, &KeyEventController::pageLoaded);
-	startKeyEventService();
+    connect(plexWebPage, &QWebEnginePage::loadFinished, this, &KeyEventController::pageLoaded);
 }
 
 void KeyEventController::startKeyEventService()
@@ -45,7 +46,7 @@ void KeyEventController::executeKey(Qt::Key keyPressed)
 	}
 
     QString javaScript = JavaScriptLoader::loadScript(keyPressed);
-	plexWebView->page()->runJavaScript(javaScript);
+    plexWebPage->runJavaScript(javaScript);
 }
 
 void KeyEventController::stopPressed()
@@ -82,5 +83,6 @@ void KeyEventController::pageLoaded(int loadSuccessful)
 	}
 
 	qInfo() << status + " page load.";
+    startKeyEventService();
 	this -> pageReady = loadSuccessful;
 }

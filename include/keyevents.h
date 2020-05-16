@@ -10,11 +10,12 @@ class KeyEventController : public QObject
 	Q_OBJECT
 
 	private:
-		QWebEngineView *plexWebView;
+        QWebEnginePage *plexWebPage;
 		int pageReady;
 
 	public:
-		KeyEventController(QWebEngineView *view);
+        KeyEventController(QWebEnginePage *view);
+        ~KeyEventController();
 		void startKeyEventService();
 
 	public slots:

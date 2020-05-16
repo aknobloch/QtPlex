@@ -8,6 +8,7 @@
 #include "../../include/constants.h"
 #include "../../include/applicationwindow.h"
 #include "../../include/configserverhelp.h"
+#include "../../include/logfilterwebpage.h"
 
 ApplicationWindow::ApplicationWindow(QWidget *parent) : QMainWindow(parent)
 {
@@ -52,12 +53,14 @@ void ApplicationWindow::setHelpWindow()
 
 void ApplicationWindow::setPlexView(QString serverAddress)
 {
-	QWebEngineView *view = new QWebEngineView();
-	view -> setUrl(QUrl(serverAddress));
+    QWebEnginePage *page = new LogFilterWebPage();
+    page->setUrl(QUrl(serverAddress));
 
-	shortcutController = new KeyEventController(view);
+    QWebEngineView *view = new QWebEngineView();
+    view->setPage(page);
 
-	setCentralWidget(view);
+    shortcutController = new KeyEventController(page);
+    setCentralWidget(view);
 }
 
 void ApplicationWindow::show()

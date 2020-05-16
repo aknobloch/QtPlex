@@ -14,6 +14,7 @@ SOURCES += src/app/applicationwindow.cpp \
     src/app/configserverhelp.cpp \
     src/app/javascriptloader.cpp \
     src/app/keyevents.cpp \
+    src/app/logfilterwebpage.cpp \
     src/app/main.cpp \
     src/app/settingsdialog.cpp
 
@@ -40,6 +41,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    include/logfilterwebpage.h \
     include/webdisplay.h \
     include/keyevents.h \
     include/javascriptloader.h \
