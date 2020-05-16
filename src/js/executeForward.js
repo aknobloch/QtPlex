@@ -4,3 +4,4 @@ var keyboardEventInit = {
     'which': 39
 }
 var rightArrowKey = new KeyboardEvent('keydown',keyboardEventInit);
+document.dispatchEvent(rightArrowKey);

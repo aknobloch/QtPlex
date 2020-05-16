@@ -4,3 +4,4 @@ var keyboardEventInit = {
     'which': 37
 }
 var leftArrowKey = new KeyboardEvent('keydown', keyboardEventInit);
+document.dispatchEvent(rightArrowKey);

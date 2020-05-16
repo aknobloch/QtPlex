@@ -44,31 +44,31 @@ void KeyEventController::executeKey(Qt::Key keyPressed)
 		return;
 	}
 
-	QString javaScript = JavaScriptLoader::loadScript(keyPressed);
+    QString javaScript = JavaScriptLoader::loadScript(keyPressed);
 	plexWebView->page()->runJavaScript(javaScript);
 }
 
 void KeyEventController::stopPressed()
 {
-	qInfo() << "Stop key registered.";
+    qInfo() << "Stop key pressed.";
 	executeKey(Qt::Key_MediaStop);
 }
 
 void KeyEventController::prevPressed()
 {
-	qInfo() << "Previous key registered.";
+    qInfo() << "Previous key pressed.";
 	executeKey(Qt::Key_MediaPrevious);
 }
 
 void KeyEventController::playPressed()
 {
-	qInfo() << "Play/Pause key registered.";
+    qInfo() << "Play/Pause key pressed.";
 	executeKey(Qt::Key_MediaPlay);
 }
 
 void KeyEventController::nextPressed()
 {
-	qInfo() << "Next key registered.";
+    qInfo() << "Next key pressed.";
 	executeKey(Qt::Key_MediaNext);
 }
 
