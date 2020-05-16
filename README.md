@@ -14,6 +14,15 @@ sudo apt-get install qtwebengine5-dev qtdeclarative5-dev libqt5x11extras5-dev li
 ### Getting Started
 Download QtCreator and run the project through the build button. Make sure to have the prerequisite packages installed.
 
+##### GNOME Intercepts
+If you notice the application no longer responding to media keys, and instead a pop-up shown indicating there are no media applications present, you likely need to disable GNOME from intercepting X keys. You can read more [here](https://askubuntu.com/questions/990284/media-keys-not-working-on-ubuntu-17-10).
+
+Steps to disable:
+1. Install `dconf-editor`
+2. Open `dconf-editor` and navigate to `org.gnome.settings-daemon.plugins.media-keys`.
+3. Remove the `previous-static` binding by changing the value to nothing (`['']`).
+4. Repeat the above for `pause-static` and `next-static`.
+
 ##### Proprietary Codecs
 In order to enable full functionality of the Plex web app (video and particular audio), some proprietary codecs need to be available to the QtWebEngine. Unfortunately, due to licensing, these cannot be packaged with the Qt libraries, or through this application. As such, you'll need to build the QtWebEngine from source. But, fear not! It's relatively painless. You can find more information on building QtWebEngine from source [here](http://wiki.qt.io/QtWebEngine/How_to_Try). Before running the `qmake` command in that guide, you'll need to enable the proprietary codecs using the `--webengine-proprietary-codecs` flag. More information on that can be found [here](https://doc.qt.io/qt-5.11/qtwebengine-features.html). 
 
