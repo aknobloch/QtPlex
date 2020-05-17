@@ -11,17 +11,17 @@
 #include "../../include/config_server_help.h"
 #include "../../include/plex_web_page.h"
 
-ApplicationWindow::ApplicationWindow(QWidget *parent) : QMainWindow(parent)
-{
+ApplicationWindow::ApplicationWindow(QWidget *parent) : QMainWindow(parent) {
+
     // Sets the initial size to 70% of available screen
-    resize(QDesktopWidget().availableGeometry(this).size() * 0.7);
+    resize(QDesktopWidget().availableGeometry(this).size());
 
 	initializeMenuBar();
     initializeCentralWidget();
 }
 
-void ApplicationWindow::initializeMenuBar()
-{
+void ApplicationWindow::initializeMenuBar() {
+
 	QMenu *file = new QMenu("File");
 	file -> addAction("Settings", this, &ApplicationWindow::showSettingsDialog);
 
@@ -29,33 +29,30 @@ void ApplicationWindow::initializeMenuBar()
 	menuBar() -> addMenu(file);
 }
 
-void ApplicationWindow::initializeCentralWidget()
-{
+void ApplicationWindow::initializeCentralWidget() {
+
 	QSettings settings;
 	QString serverAddress = settings.value(SERVER_ADDRESS_KEY).toString();
 
 	// If server address setting has not yet been defined
-	if(serverAddress.isNull())
-	{
+    if(serverAddress.isNull()) {
 		setHelpWindow();
 	}
-	else
-	{
-		setWindowState(Qt::WindowMaximized);
+    else {
 		setPlexView(serverAddress);
 	}
 }
 
-void ApplicationWindow::setHelpWindow()
-{
+void ApplicationWindow::setHelpWindow() {
+
 	ConfigServerHelpScreen *help = new ConfigServerHelpScreen();
 	connect(help, &ConfigServerHelpScreen::notifyConfigButtonPressed, this, &ApplicationWindow::showSettingsDialog);
 
 	setCentralWidget(help);
 }
 
-void ApplicationWindow::setPlexView(QString serverAddress)
-{
+void ApplicationWindow::setPlexView(QString serverAddress) {
+
     PlexWebPage *page = new PlexWebPage();
     page->setUrl(QUrl(serverAddress));
 
@@ -67,20 +64,19 @@ void ApplicationWindow::setPlexView(QString serverAddress)
     setCentralWidget(view);
 }
 
-void ApplicationWindow::show()
-{
-	if(showingHelpScreen())
-	{
+void ApplicationWindow::show() {
+
+    if(showingHelpScreen()) {
+
 		showNormal();
-	}
-	else
-	{
+    } else {
+
 		showMaximized();
 	}
 }
 
-void ApplicationWindow::showSettingsDialog()
-{
+void ApplicationWindow::showSettingsDialog() {
+
 	QSettings settings;
 	QString oldServerAddress = settings.value(SERVER_ADDRESS_KEY).toString();
 
@@ -90,18 +86,13 @@ void ApplicationWindow::showSettingsDialog()
 	QString newServerAddress = settings.value(SERVER_ADDRESS_KEY).toString();
 	bool changedServerAdddress = oldServerAddress.compare(newServerAddress) != 0;
 
-	if(showingHelpScreen() || changedServerAdddress)
-	{
+    if(showingHelpScreen() || changedServerAdddress) {
+
 		initializeCentralWidget();
 	}
 }
 
-bool ApplicationWindow::showingHelpScreen()
-{
-	if(dynamic_cast<ConfigServerHelpScreen*>(centralWidget()))
-	{
-		return true;
-	}
+bool ApplicationWindow::showingHelpScreen() {
 
-	return false;
+    return dynamic_cast<ConfigServerHelpScreen*>(centralWidget());
 }
