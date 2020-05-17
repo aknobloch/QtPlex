@@ -4,17 +4,19 @@
 #include <QObject>
 #include <QDebug>
 #include <QHotkey>
+#include <memory>
 #include "../../include/keyevents.h"
-#include "../../include/javascriptloader.h"
+#include "../../include/javascript_loader.h"
 
 KeyEventController::~KeyEventController() = default;
 
-KeyEventController::KeyEventController(QWebEnginePage *page)
+KeyEventController::KeyEventController(PlexWebPage *page)
 {
     this -> plexWebPage = page;
 	this -> pageReady = 0;
+    this -> statusNotifier = new MediaStatusNotification();
 
-    connect(plexWebPage, &QWebEnginePage::loadFinished, this, &KeyEventController::pageLoaded);
+    connect(plexWebPage, &PlexWebPage::loadFinished, this, &KeyEventController::pageLoaded);
 }
 
 void KeyEventController::startKeyEventService()
@@ -45,7 +47,7 @@ void KeyEventController::executeKey(Qt::Key keyPressed)
 		return;
 	}
 
-    QString javaScript = JavaScriptLoader::loadScript(keyPressed);
+    QString javaScript = JavaScriptLoader::loadScriptByKeycode(keyPressed);
     plexWebPage->runJavaScript(javaScript);
 }
 
@@ -59,6 +61,7 @@ void KeyEventController::prevPressed()
 {
     qInfo() << "Previous key pressed.";
 	executeKey(Qt::Key_MediaPrevious);
+    statusNotifier->notify(plexWebPage->getCurrentPlaybackInfo());
 }
 
 void KeyEventController::playPressed()
@@ -71,6 +74,7 @@ void KeyEventController::nextPressed()
 {
     qInfo() << "Next key pressed.";
 	executeKey(Qt::Key_MediaNext);
+    statusNotifier->notify(plexWebPage->getCurrentPlaybackInfo());
 }
 
 void KeyEventController::pageLoaded(int loadSuccessful)

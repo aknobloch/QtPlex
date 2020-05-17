@@ -4,10 +4,15 @@
 #include <QtWebEngine/QtWebEngine>
 #include <QWebEngineView>
 
-class LogFilterWebPage : public QWebEnginePage {
+class PlexWebPage : public QWebEnginePage {
 
 public:
-    LogFilterWebPage();
+    PlexWebPage();
+    QString getCurrentPlaybackInfo();
     virtual void javaScriptConsoleMessage(JavaScriptConsoleMessageLevel level, const QString &message, int lineNumber, const QString &sourceID);
+
+private:
+    QString currentPlaybackInfo;
+    void refreshCurrentPlaybackInfo();
 };
 #endif // LOGFILTERWEBPAGE_H
