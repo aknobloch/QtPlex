@@ -3,12 +3,12 @@
 #include <QWebEngineView>
 #include <QInputDialog>
 #include <QMenuBar>
-#include "../../include/keyevents.h"
-#include "../../include/settingsdialog.h"
+#include "../../include/key_events.h"
+#include "../../include/settings_dialog.h"
 #include "../../include/constants.h"
-#include "../../include/applicationwindow.h"
-#include "../../include/configserverhelp.h"
-#include "../../include/logfilterwebpage.h"
+#include "../../include/application_window.h"
+#include "../../include/config_server_help.h"
+#include "../../include/plex_web_page.h"
 
 ApplicationWindow::ApplicationWindow(QWidget *parent) : QMainWindow(parent)
 {
@@ -53,11 +53,12 @@ void ApplicationWindow::setHelpWindow()
 
 void ApplicationWindow::setPlexView(QString serverAddress)
 {
-    QWebEnginePage *page = new LogFilterWebPage();
+    PlexWebPage *page = new PlexWebPage();
     page->setUrl(QUrl(serverAddress));
 
     QWebEngineView *view = new QWebEngineView();
     view->setPage(page);
+    view->show();
 
     shortcutController = new KeyEventController(page);
     setCentralWidget(view);

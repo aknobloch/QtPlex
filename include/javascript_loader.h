@@ -5,8 +5,8 @@
 
 class JavaScriptLoader
 {
-	public:
-		static QString loadScript(Qt::Key keycode);
+    public:
+        static QString loadScriptByName(QString filename);
 };
 
 #endif // JAVASCRIPTLOADER_H

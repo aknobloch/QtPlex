@@ -4,7 +4,7 @@
 #include <QLineEdit>
 #include <QDialogButtonBox>
 #include <QSettings>
-#include "../../include/settingsdialog.h"
+#include "../../include/settings_dialog.h"
 #include "../../include/constants.h"
 
 #include <QDebug>
