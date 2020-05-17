@@ -1,20 +1,20 @@
 # QtPlex
-QtPlex provides a cross-platform, Linux-first solution for streaming Plex media. The application supports playback of all Plex media, as well as enabling keyboard shortcuts for media control.
+QtPlex provides a cross-platform, Linux-first solution for streaming Plex media. The application is a shallow wrapper into the standard web interface, with the added benefits of native media keyboard shortcuts.
+
+![QtPlex GUI Example](https://i.imgur.com/6xfr4Sb.png)
 
 ## Installation and Setup
 
 ### Prerequisites
 * Accessible server running Plex. 
 * QtCreator software.
-* The following packages installed:
+
+1. Install the libraries needed for QtPlex:
 ```
 sudo apt-get install qtwebengine5-dev qtdeclarative5-dev libqt5x11extras5-dev libfontconfig1-dev libfreetype6-dev libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libx11-xcb-dev libxcb-glx0-dev libxkbcommon-x11-dev
 ```
-### Building
-Download QtCreator and run the project through the build button.
-
-### GNOME Installation
-Installation is done through manual desktop entry creation. Example shown below:
+2. Open the QtPlex.pro file in QtCreator, then build/run.
+3. [Optional] Add a desktop file for launching:
 ```
 [Desktop Entry]
 Type=Application
