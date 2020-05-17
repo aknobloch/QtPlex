@@ -2,24 +2,23 @@
 #define OPTIONSDIALOG_H
 
 #include <QDialog>
-#include <QLineEdit>
 #include <QFormLayout>
+#include <QLineEdit>
 
-class SettingsDialog : public QDialog
-{
-		Q_OBJECT
+class SettingsDialog : public QDialog {
+  Q_OBJECT
 
-	public:
-		SettingsDialog();
-		void initializeLayout();
+public:
+  SettingsDialog();
+  void initializeLayout();
 
-	private:
-		QLineEdit *serverAddress;
+private:
+  QLineEdit *serverAddress;
 
-		QFormLayout * createServerInfoForm();
+  QFormLayout *createServerInfoForm();
 
-	public slots:
-		void okPressed();
+public slots:
+  void okPressed();
 };
 
 #endif // OPTIONSDIALOG_H

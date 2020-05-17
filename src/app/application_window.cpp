@@ -1,98 +1,98 @@
-#include <Qt>
-#include <QtWebEngine/QtWebEngine>
-#include <QWebEngineView>
-#include <QInputDialog>
-#include <QDesktopWidget>
-#include <QMenuBar>
-#include "../../include/key_events.h"
-#include "../../include/settings_dialog.h"
-#include "../../include/constants.h"
 #include "../../include/application_window.h"
 #include "../../include/config_server_help.h"
+#include "../../include/constants.h"
+#include "../../include/key_events.h"
 #include "../../include/plex_web_page.h"
+#include "../../include/settings_dialog.h"
+#include <QDesktopWidget>
+#include <QInputDialog>
+#include <QMenuBar>
+#include <QWebEngineView>
+#include <Qt>
+#include <QtWebEngine/QtWebEngine>
 
 ApplicationWindow::ApplicationWindow(QWidget *parent) : QMainWindow(parent) {
 
-    // Sets the initial size to 70% of available screen
-    resize(QDesktopWidget().availableGeometry(this).size());
+  // Sets the initial size to 70% of available screen
+  resize(QDesktopWidget().availableGeometry(this).size());
 
-	initializeMenuBar();
-    initializeCentralWidget();
+  initializeMenuBar();
+  initializeCentralWidget();
 }
 
 void ApplicationWindow::initializeMenuBar() {
 
-	QMenu *file = new QMenu("File");
-	file -> addAction("Settings", this, &ApplicationWindow::showSettingsDialog);
+  QMenu *file = new QMenu("File");
+  file->addAction("Settings", this, &ApplicationWindow::showSettingsDialog);
 
-	menuBar() -> setStyleSheet("background-color:rgb(244,244,244)");
-	menuBar() -> addMenu(file);
+  menuBar()->setStyleSheet("background-color:rgb(244,244,244)");
+  menuBar()->addMenu(file);
 }
 
 void ApplicationWindow::initializeCentralWidget() {
 
-	QSettings settings;
-	QString serverAddress = settings.value(SERVER_ADDRESS_KEY).toString();
+  QSettings settings;
+  QString serverAddress = settings.value(SERVER_ADDRESS_KEY).toString();
 
-	// If server address setting has not yet been defined
-    if(serverAddress.isNull()) {
-		setHelpWindow();
-	}
-    else {
-		setPlexView(serverAddress);
-	}
+  // If server address setting has not yet been defined
+  if (serverAddress.isNull()) {
+    setHelpWindow();
+  } else {
+    setPlexView(serverAddress);
+  }
 }
 
 void ApplicationWindow::setHelpWindow() {
 
-	ConfigServerHelpScreen *help = new ConfigServerHelpScreen();
-	connect(help, &ConfigServerHelpScreen::notifyConfigButtonPressed, this, &ApplicationWindow::showSettingsDialog);
+  ConfigServerHelpScreen *help = new ConfigServerHelpScreen();
+  connect(help, &ConfigServerHelpScreen::notifyConfigButtonPressed, this,
+          &ApplicationWindow::showSettingsDialog);
 
-	setCentralWidget(help);
+  setCentralWidget(help);
 }
 
 void ApplicationWindow::setPlexView(QString serverAddress) {
 
-    PlexWebPage *page = new PlexWebPage();
-    page->setUrl(QUrl(serverAddress));
+  PlexWebPage *page = new PlexWebPage();
+  page->setUrl(QUrl(serverAddress));
 
-    QWebEngineView *view = new QWebEngineView();
-    view->setPage(page);
-    view->show();
+  QWebEngineView *view = new QWebEngineView();
+  view->setPage(page);
+  view->show();
 
-    shortcutController = new KeyEventController(page);
-    setCentralWidget(view);
+  shortcutController = new KeyEventController(page);
+  setCentralWidget(view);
 }
 
 void ApplicationWindow::show() {
 
-    if(showingHelpScreen()) {
+  if (showingHelpScreen()) {
 
-		showNormal();
-    } else {
+    showNormal();
+  } else {
 
-		showMaximized();
-	}
+    showMaximized();
+  }
 }
 
 void ApplicationWindow::showSettingsDialog() {
 
-	QSettings settings;
-	QString oldServerAddress = settings.value(SERVER_ADDRESS_KEY).toString();
+  QSettings settings;
+  QString oldServerAddress = settings.value(SERVER_ADDRESS_KEY).toString();
 
-	SettingsDialog options;
-	options.exec();
+  SettingsDialog options;
+  options.exec();
 
-	QString newServerAddress = settings.value(SERVER_ADDRESS_KEY).toString();
-	bool changedServerAdddress = oldServerAddress.compare(newServerAddress) != 0;
+  QString newServerAddress = settings.value(SERVER_ADDRESS_KEY).toString();
+  bool changedServerAdddress = oldServerAddress.compare(newServerAddress) != 0;
 
-    if(showingHelpScreen() || changedServerAdddress) {
+  if (showingHelpScreen() || changedServerAdddress) {
 
-		initializeCentralWidget();
-	}
+    initializeCentralWidget();
+  }
 }
 
 bool ApplicationWindow::showingHelpScreen() {
 
-    return dynamic_cast<ConfigServerHelpScreen*>(centralWidget());
+  return dynamic_cast<ConfigServerHelpScreen *>(centralWidget());
 }

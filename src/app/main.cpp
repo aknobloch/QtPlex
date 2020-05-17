@@ -1,24 +1,23 @@
-#include <Qt>
-#include <QApplication>
-#include "../../include/constants.h"
 #include "../../include/application_window.h"
+#include "../../include/constants.h"
+#include <QApplication>
+#include <Qt>
 
 #include <QDebug>
 
 using namespace std;
 
-int main(int argc, char *argv[])
-{
-	QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-	QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+int main(int argc, char *argv[]) {
+  QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 
-	QCoreApplication::setOrganizationName(ORG_NAME);
-	QCoreApplication::setApplicationName(APP_NAME);
+  QCoreApplication::setOrganizationName(ORG_NAME);
+  QCoreApplication::setApplicationName(APP_NAME);
 
-	QApplication app(argc, argv);
+  QApplication app(argc, argv);
 
-	ApplicationWindow window;
-	window.show();
+  ApplicationWindow window;
+  window.show();
 
-	return app.exec();
+  return app.exec();
 }

@@ -3,10 +3,9 @@
 
 #include <QFile>
 
-class JavaScriptLoader
-{
-    public:
-        static QString loadScriptByName(QString filename);
+class JavaScriptLoader {
+public:
+  static QString loadScriptByName(QString filename);
 };
 
 #endif // JAVASCRIPTLOADER_H
