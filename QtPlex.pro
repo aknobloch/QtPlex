@@ -12,10 +12,11 @@ CONFIG += c++11
 
 SOURCES += src/app/applicationwindow.cpp \
     src/app/configserverhelp.cpp \
-    src/app/javascriptloader.cpp \
-    src/app/keyevents.cpp \
-    src/app/logfilterwebpage.cpp \
+    src/app/javascript_loader.cpp \
+    src/app/key_events.cpp \
     src/app/main.cpp \
+    src/app/media_status_notification.cc \
+    src/app/plex_web_page.cpp \
     src/app/settingsdialog.cpp
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
@@ -41,10 +42,11 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    include/logfilterwebpage.h \
+    include/javascript_loader.h \
+    include/key_events.h \
+    include/media_status_notification.h \
+    include/plex_web_page.h \
     include/webdisplay.h \
-    include/keyevents.h \
-    include/javascriptloader.h \
     include/constants.h \
     include/applicationwindow.h \
     include/configserverhelp.h \
@@ -52,18 +54,15 @@ HEADERS += \
 
 unix|win32: LIBS += -lX11
 
-# Add the JavaScript source files to build output
+# Add the JavaScript source files and Resources to build output
 # Explanation of the following can be found here:
 # https://dragly.org/2013/11/05/copying-data-files-to-the-build-directory-when-working-with-qmake/
-include_js_source.commands = $(COPY_DIR) $$PWD/src/js $$OUT_PWD
+include_extras.commands = $(COPY_DIR) $$PWD/src/js $$OUT_PWD && $(COPY_DIR) $$PWD/res $$OUT_PWD
 
-# Copy over the images
-include_js_source.commands = $(COPY_DIR) $$PWD/res $$OUT_PWD
-
-first.depends = $(first) include_js_source
+first.depends = $(first) include_extras
 export(first.depends)
-export(include_js_source.commands)
-QMAKE_EXTRA_TARGETS += first include_js_source
+export(include_extras.commands)
+QMAKE_EXTRA_TARGETS += first include_extras
 
 RESOURCES += \
     resources.qrc

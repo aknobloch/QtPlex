@@ -4,17 +4,17 @@
 #include <QObject>
 #include <QDebug>
 #include <QHotkey>
-#include "../../include/keyevents.h"
-#include "../../include/javascriptloader.h"
+#include <memory>
+#include "../../include/key_events.h"
 
 KeyEventController::~KeyEventController() = default;
 
-KeyEventController::KeyEventController(QWebEnginePage *page)
+KeyEventController::KeyEventController(PlexWebPage *page)
 {
     this -> plexWebPage = page;
 	this -> pageReady = 0;
 
-    connect(plexWebPage, &QWebEnginePage::loadFinished, this, &KeyEventController::pageLoaded);
+    connect(plexWebPage, &PlexWebPage::loadFinished, this, &KeyEventController::pageLoaded);
 }
 
 void KeyEventController::startKeyEventService()
@@ -24,10 +24,13 @@ void KeyEventController::startKeyEventService()
 	auto mediaPlay = new QHotkey(QKeySequence(Qt::Key_MediaPlay), true, this);
 	auto mediaNext = new QHotkey(QKeySequence(Qt::Key_MediaNext), true, this);
 
-	qInfo() << "Stop registered: " << mediaStop->isRegistered();
-	qInfo() << "Prev registered: " << mediaPrev->isRegistered();
-	qInfo() << "Play registered: " << mediaPlay->isRegistered();
-	qInfo() << "Next registered: " << mediaNext->isRegistered();
+    bool allKeysRegistered =
+        mediaStop->isRegistered() &&
+        mediaPrev->isRegistered() &&
+        mediaPlay->isRegistered() &&
+        mediaNext->isRegistered();
+
+    qInfo() << "Hotkeys registered: " << allKeysRegistered;
 
 	connect(mediaStop, &QHotkey::activated, this, &KeyEventController::stopPressed);
 	connect(mediaPrev, &QHotkey::activated, this, &KeyEventController::prevPressed);
@@ -37,40 +40,28 @@ void KeyEventController::startKeyEventService()
 	qInfo() << "Key Event service started.";
 }
 
-void KeyEventController::executeKey(Qt::Key keyPressed)
-{
-	if(pageReady != 1)
-	{
-		qInfo() << "Page not loaded, media key ignored.";
-		return;
-	}
-
-    QString javaScript = JavaScriptLoader::loadScript(keyPressed);
-    plexWebPage->runJavaScript(javaScript);
-}
-
 void KeyEventController::stopPressed()
 {
-    qInfo() << "Stop key pressed.";
-	executeKey(Qt::Key_MediaStop);
+    qDebug() << "Stop key event received.";
+    plexWebPage->stopPlayback();
 }
 
 void KeyEventController::prevPressed()
 {
-    qInfo() << "Previous key pressed.";
-	executeKey(Qt::Key_MediaPrevious);
+    qDebug() << "Previous key event received.";
+    plexWebPage->previousTrack();
 }
 
 void KeyEventController::playPressed()
 {
-    qInfo() << "Play/Pause key pressed.";
-	executeKey(Qt::Key_MediaPlay);
+    qDebug() << "Play/Pause key event received.";
+    plexWebPage->togglePlayback();
 }
 
 void KeyEventController::nextPressed()
 {
-    qInfo() << "Next key pressed.";
-	executeKey(Qt::Key_MediaNext);
+    qDebug() << "Next key event received.";
+    plexWebPage->forwardTrack();
 }
 
 void KeyEventController::pageLoaded(int loadSuccessful)

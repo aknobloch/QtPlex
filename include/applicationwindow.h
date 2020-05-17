@@ -2,7 +2,7 @@
 #define APPLICATIONWINDOW_H
 
 #include <QMainWindow>
-#include "keyevents.h"
+#include "key_events.h"
 
 class ApplicationWindow : public QMainWindow
 {
