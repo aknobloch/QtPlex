@@ -34,7 +34,7 @@ Name=QtPlex
 
 Keywords=audio;plex;qt
 
-Icon=/home/aknobloch/Documents/Development/build-QtPlex-Desktop-Release/res/icon48.png
+Icon=/home/aknobloch/Documents/Development/build-QtPlex-Desktop-Release/res/icon256.png
 
 Type=Application
 Exec=/home/aknobloch/Documents/Development/build-QtPlex-Desktop-Release/QtPlex
