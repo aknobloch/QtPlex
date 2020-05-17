@@ -13,7 +13,7 @@
 
 ApplicationWindow::ApplicationWindow(QWidget *parent) : QMainWindow(parent) {
 
-  // Sets the initial size to 70% of available screen
+  // Sets the initial size to fill screen
   resize(QDesktopWidget().availableGeometry(this).size());
 
   initializeMenuBar();
