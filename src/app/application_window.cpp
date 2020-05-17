@@ -2,6 +2,7 @@
 #include <QtWebEngine/QtWebEngine>
 #include <QWebEngineView>
 #include <QInputDialog>
+#include <QDesktopWidget>
 #include <QMenuBar>
 #include "../../include/key_events.h"
 #include "../../include/settings_dialog.h"
@@ -12,6 +13,7 @@
 
 ApplicationWindow::ApplicationWindow(QWidget *parent) : QMainWindow(parent)
 {
+    resize(QDesktopWidget().availableGeometry(this).size() * 0.7);
 	initializeMenuBar();
 	initializeCentralWidget();
 	setStyleSheet("background-color:rgb(31,31,31)");
