@@ -73,8 +73,8 @@ void MediaStatusNotification::show()
     animation.setEndValue(1.0);     // End - completely opaque widget
     QRect currentScreenSize = QGuiApplication::primaryScreen()->geometry();
 
-    setGeometry(currentScreenSize.width() - 36 - width() + currentScreenSize.x(),
-                currentScreenSize.height() - 36 - height() + currentScreenSize.y(),
+    setGeometry(currentScreenSize.width() - 20 - width() + currentScreenSize.x(),
+                currentScreenSize.height() - 20 - height() + currentScreenSize.y(),
                 width(),
                 height());
     QWidget::show();

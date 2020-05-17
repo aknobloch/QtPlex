@@ -12,8 +12,6 @@ KeyEventController::~KeyEventController() = default;
 KeyEventController::KeyEventController(PlexWebPage *page)
 {
     this -> plexWebPage = page;
-    this -> pageReady = 0;
-
     connect(plexWebPage, &PlexWebPage::loadFinished, this, &KeyEventController::pageLoaded);
 }
 
@@ -64,16 +62,13 @@ void KeyEventController::nextPressed()
     plexWebPage->forwardTrack();
 }
 
-void KeyEventController::pageLoaded(int loadSuccessful)
-{
-	QString status = "Successful";
+void KeyEventController::pageLoaded(bool loadSuccessful) {
 
-	if(loadSuccessful == 0)
-	{
-		status = "Unsuccessful";
-	}
+    if(loadSuccessful == false) {
 
-	qInfo() << status + " page load.";
+       qWarning() << "Failure to load Plex Web Page, aborting key bindings.";
+       return;
+    }
+
     startKeyEventService();
-	this -> pageReady = loadSuccessful;
 }

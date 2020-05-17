@@ -12,19 +12,18 @@ class KeyEventController : public QObject
 
 private:
     PlexWebPage *plexWebPage;
-    int pageReady;
 
 public:
     KeyEventController(PlexWebPage *view);
     ~KeyEventController();
-            void startKeyEventService();
+    void startKeyEventService();
 
-    public slots:
-    void pageLoaded(int loadSuccessful);
-            void stopPressed();
-            void prevPressed();
-            void playPressed();
-            void nextPressed();
+public slots:
+    void pageLoaded(bool loadSuccessful);
+    void stopPressed();
+    void prevPressed();
+    void playPressed();
+    void nextPressed();
 };
 
 #endif // KEYEVENTTHREAD_H

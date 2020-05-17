@@ -50,7 +50,6 @@ HEADERS += \
     include/media_status_notification.h \
     include/plex_web_page.h \
     include/settings_dialog.h \
-    include/webdisplay.h \
     include/constants.h
 
 unix|win32: LIBS += -lX11
