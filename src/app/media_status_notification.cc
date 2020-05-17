@@ -5,11 +5,8 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QDebug>
-<<<<<<< HEAD
 #include <QScreen>
 #include <QWindow>
-=======
->>>>>>> b67aacebd7353ec510d6a75591d8a53df1bbbcd2
 
 MediaStatusNotification::MediaStatusNotification(QWidget *parent) : QWidget(parent)
 {
@@ -71,7 +68,6 @@ void MediaStatusNotification::show()
 {
     setWindowOpacity(0.0);  // Set the transparency to zero
 
-<<<<<<< HEAD
     animation.setDuration(100);     // Configuring the duration of the animation
     animation.setStartValue(0.0);   // The start value is 0 (fully transparent widget)
     animation.setEndValue(1.0);     // End - completely opaque widget
@@ -79,14 +75,6 @@ void MediaStatusNotification::show()
 
     setGeometry(currentScreenSize.width() - 36 - width() + currentScreenSize.x(),
                 currentScreenSize.height() - 36 - height() + currentScreenSize.y(),
-=======
-    animation.setDuration(150);     // Configuring the duration of the animation
-    animation.setStartValue(0.0);   // The start value is 0 (fully transparent widget)
-    animation.setEndValue(1.0);     // End - completely opaque widget
-
-    setGeometry(QApplication::desktop()->availableGeometry().width() - 36 - width() + QApplication::desktop() -> availableGeometry().x(),
-                QApplication::desktop()->availableGeometry().height() - 36 - height() + QApplication::desktop() -> availableGeometry().y(),
->>>>>>> b67aacebd7353ec510d6a75591d8a53df1bbbcd2
                 width(),
                 height());
     QWidget::show();
@@ -98,11 +86,7 @@ void MediaStatusNotification::show()
 void MediaStatusNotification::hideAnimation()
 {
     timer->stop();
-<<<<<<< HEAD
-    animation.setDuration(500);
-=======
     animation.setDuration(1000);
->>>>>>> b67aacebd7353ec510d6a75591d8a53df1bbbcd2
     animation.setStartValue(1.0);
     animation.setEndValue(0.0);
     animation.start();

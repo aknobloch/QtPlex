@@ -4,10 +4,10 @@
 #include <QInputDialog>
 #include <QMenuBar>
 #include "../../include/key_events.h"
-#include "../../include/settingsdialog.h"
+#include "../../include/settings_dialog.h"
 #include "../../include/constants.h"
-#include "../../include/applicationwindow.h"
-#include "../../include/configserverhelp.h"
+#include "../../include/application_window.h"
+#include "../../include/config_server_help.h"
 #include "../../include/plex_web_page.h"
 
 ApplicationWindow::ApplicationWindow(QWidget *parent) : QMainWindow(parent)

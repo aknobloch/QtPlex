@@ -12,8 +12,7 @@ KeyEventController::~KeyEventController() = default;
 KeyEventController::KeyEventController(PlexWebPage *page)
 {
     this -> plexWebPage = page;
-	this -> pageReady = 0;
-    this -> statusNotifier = new MediaStatusNotification();
+    this -> pageReady = 0;
 
     connect(plexWebPage, &PlexWebPage::loadFinished, this, &KeyEventController::pageLoaded);
 }

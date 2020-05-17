@@ -1,7 +1,7 @@
 #include <Qt>
 #include <QApplication>
 #include "../../include/constants.h"
-#include "../../include/applicationwindow.h"
+#include "../../include/application_window.h"
 
 #include <QDebug>
 

@@ -10,14 +10,15 @@ QT += gui x11extras
 
 CONFIG += c++11
 
-SOURCES += src/app/applicationwindow.cpp \
-    src/app/configserverhelp.cpp \
+SOURCES += \
+    src/app/application_window.cpp \
+    src/app/config_server_help.cpp \
     src/app/javascript_loader.cpp \
     src/app/key_events.cpp \
     src/app/main.cpp \
     src/app/media_status_notification.cc \
     src/app/plex_web_page.cpp \
-    src/app/settingsdialog.cpp
+    src/app/settings_dialog.cpp
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -42,15 +43,15 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    include/application_window.h \
+    include/config_server_help.h \
     include/javascript_loader.h \
     include/key_events.h \
     include/media_status_notification.h \
     include/plex_web_page.h \
+    include/settings_dialog.h \
     include/webdisplay.h \
-    include/constants.h \
-    include/applicationwindow.h \
-    include/configserverhelp.h \
-    include/settingsdialog.h
+    include/constants.h
 
 unix|win32: LIBS += -lX11
 
