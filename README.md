@@ -15,9 +15,9 @@ sudo apt-get install qtwebengine5-dev qtdeclarative5-dev libqt5x11extras5-dev li
 Download QtCreator and run the project through the build button. Make sure to have the prerequisite packages installed.
 
 ##### GNOME Intercepts
-If you notice the application no longer responding to media keys, and instead a pop-up shown indicating there are no media applications present, you likely need to disable GNOME from intercepting X keys. You can read more [here](https://askubuntu.com/questions/990284/media-keys-not-working-on-ubuntu-17-10).
+If you notice the application no longer responding to media keys, and instead a pop-up shown indicating there are no media applications present, you can disable GNOME from intercepting X keys. You can read more [here](https://askubuntu.com/questions/990284/media-keys-not-working-on-ubuntu-17-10).
 
-Steps to disable:
+Workaround:
 1. Install `dconf-editor`
 2. Open `dconf-editor` and navigate to `org.gnome.settings-daemon.plugins.media-keys`.
 3. Remove the `previous-static` binding by changing the value to nothing (`['']`).
