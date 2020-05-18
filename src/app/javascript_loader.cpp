@@ -5,14 +5,16 @@
 #include <QKeySequence>
 #include <QString>
 
+
 QString JavaScriptLoader::loadScriptByName(QString filename) {
-  QFile jsFunction;
-  jsFunction.setFileName(QCoreApplication::applicationDirPath() + "/js/" +
+
+  QFile jsFile;
+  jsFile.setFileName(QCoreApplication::applicationDirPath() + "/js/" +
                          filename);
+  jsFile.open(QIODevice::ReadOnly);
 
-  jsFunction.open(QIODevice::ReadOnly);
-  QString scriptContents = jsFunction.readAll();
+  QString javascript = jsFile.readAll();
+  jsFile.close();
 
-  jsFunction.close();
-  return scriptContents;
+  return javascript;
 }

@@ -16,26 +16,27 @@ public:
   void togglePlayback();
   void forwardTrack();
   void previousTrack();
-  virtual void javaScriptConsoleMessage(JavaScriptConsoleMessageLevel level,
-                                        const QString &message, int lineNumber,
-                                        const QString &sourceID);
+  virtual void javaScriptConsoleMessage(JavaScriptConsoleMessageLevel,
+                                        const QString &message, int,
+                                        const QString&);
 
 private:
   QString currentPlaybackInfo;
   MediaStatusNotification *mediaStatusNotifier;
-  bool isLoaded;
+  bool pageReady;
+  void loadAndRunScript(QString scriptName);
   void refreshCurrentPlaybackInfo();
   bool isMediaPlaybackTitle(const QString &title);
   QString parseNotificationFromTitle(const QString &title);
 
 private slots:
-  void finishedLoading(bool success);
-
   /**
    * A title change indicates that the playback status of the
-   * internal media has changed. Plex will update the title with
-   * the currently playing track.
+   * internal media has changed, since Plex updates the title with
+   * the currently playing track. Janky, but this is the only reliable
+   * way I could find to react to changing songs.
    */
   void notifyTitleChanged(const QString &title);
+  void finishedLoading(bool isSuccess);
 };
 #endif // LOGFILTERWEBPAGE_H

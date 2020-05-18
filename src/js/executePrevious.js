@@ -5,3 +5,4 @@ var keyboardEventInit = {
 }
 var leftArrowKey = new KeyboardEvent('keydown', keyboardEventInit);
 document.dispatchEvent(leftArrowKey);
+commonLibrary.notifySuccess();

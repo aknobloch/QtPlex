@@ -1,3 +1,19 @@
-// TODO (#9) - detect if we are already stopped, and don't resume if so
-var spaceKey = new KeyboardEvent('keydown',{'keyCode':32,'which':32});
-document.dispatchEvent(spaceKey);
+function stopIfPlaying(mediaHandle) {
+
+    if(mediaHandle == null) {
+        return;
+    }
+
+    if(mediaHandle.paused) {
+
+        commonLibrary.logInfo("Media is already stopped.");
+        return;
+    }
+
+    mediaHandle.pause();
+}
+
+var mediaHandle = commonLibrary.getMediaHandle();
+stopIfPlaying(mediaHandle);
+
+commonLibrary.notifySuccess();

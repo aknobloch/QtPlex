@@ -1,2 +1,12 @@
-var spaceKey = new KeyboardEvent('keydown',{'keyCode':32,'which':32});
-document.dispatchEvent(spaceKey);
+var mediaHandle = commonLibrary.getMediaHandle();
+
+if(mediaHandle.paused) {
+
+    mediaHandle.play();
+}
+else {
+
+    mediaHandle.pause();
+}
+
+commonLibrary.notifySuccess();

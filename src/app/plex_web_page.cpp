@@ -2,62 +2,77 @@
 #include "../../include/constants.h"
 #include "../../include/javascript_loader.h"
 #include <QDebug>
+#include <QApplication>
+#include <QWebEngineScript>
 
 PlexWebPage::PlexWebPage() {
 
   if (LOG_JS_CONSOLE == false) {
 
-    qWarning() << "Disabling JS console logging.";
+    qWarning() << "Disabling general JS console logging.";
   }
 
-  isLoaded = false;
+  pageReady = false;
   mediaStatusNotifier = new MediaStatusNotification();
 
   // Title change indicates that playback state has changed
   connect(this, SIGNAL(titleChanged(const QString)), this,
           SLOT(notifyTitleChanged(const QString &)));
 
-  // Used to avoid crashing by emitting notifications before loaded
+  // Initialize once finished loading
   connect(this, SIGNAL(loadFinished(bool)), this, SLOT(finishedLoading(bool)));
 }
 
 PlexWebPage::~PlexWebPage() = default;
 
-void PlexWebPage::finishedLoading(bool success) { isLoaded = success; }
+void PlexWebPage::finishedLoading(bool isSuccess) {
+
+    if(isSuccess == false) {
+
+        qFatal("Page failed to load!");
+        QApplication::exit(EXIT_CODE_FAILURE);
+    }
+
+    loadAndRunScript("commonLibrary.js");
+    pageReady = true;
+}
 
 void PlexWebPage::stopPlayback() {
 
-  QString jsFunction = JavaScriptLoader::loadScriptByName("executeStop.js");
-  this->runJavaScript(jsFunction);
+  loadAndRunScript("executeStop.js");
 }
 
 void PlexWebPage::togglePlayback() {
 
-  QString jsFunction =
-      JavaScriptLoader::loadScriptByName("executePlayPause.js");
-  this->runJavaScript(jsFunction);
+  loadAndRunScript("executePlayPause.js");
 }
 
 void PlexWebPage::forwardTrack() {
 
-  QString jsFunction = JavaScriptLoader::loadScriptByName("executeForward.js");
-  this->runJavaScript(jsFunction);
+  loadAndRunScript("executeForward.js");
 }
 
 void PlexWebPage::previousTrack() {
 
-  QString jsFunction = JavaScriptLoader::loadScriptByName("executePrevious.js");
-  this->runJavaScript(jsFunction);
+  loadAndRunScript("executePrevious.js");
+}
+
+void PlexWebPage::loadAndRunScript(QString scriptName) {
+
+    auto validateExecution = [scriptName](const QVariant &result) {
+
+        bool isSuccessful = result.toString() == "true";
+
+        if(isSuccessful == false) {
+            qWarning() << "Failed to execute script " + scriptName;
+        }
+    };
+
+    QString jsFunction = JavaScriptLoader::loadScriptByName(scriptName);
+    this->runJavaScript(jsFunction, QWebEngineScript::ApplicationWorld, validateExecution);
 }
 
 void PlexWebPage::notifyTitleChanged(const QString &title) {
-
-  if (isLoaded == false) {
-
-    qDebug() << "Title changed, but skipping due "
-                "to page not being done loading.";
-    return;
-  }
 
   if (isMediaPlaybackTitle(title) == false) {
 
@@ -107,27 +122,22 @@ QString PlexWebPage::parseNotificationFromTitle(const QString &title) {
          artist;
 }
 
-void PlexWebPage::javaScriptConsoleMessage(JavaScriptConsoleMessageLevel level,
-                                           const QString &message,
-                                           int lineNumber,
-                                           const QString &sourceID) {
+void PlexWebPage::javaScriptConsoleMessage(JavaScriptConsoleMessageLevel,
+                                           const QString &message, int,
+                                           const QString&) {
 
-  if (LOG_JS_CONSOLE == false) {
+  bool isQtPlexLog = message
+          .startsWith(JS_QTPLEX_TAG, Qt::CaseSensitivity::CaseInsensitive);
+
+  // If it isn't a QtPlex log and JS logging is disabled, discard.
+  if (isQtPlexLog == false && LOG_JS_CONSOLE == false) {
     return;
   }
 
-  switch (level) {
-
-  case QWebEnginePage::InfoMessageLevel:
-    qDebug() << message + " at " + lineNumber + " by source ID " + sourceID;
-    break;
-  case QWebEnginePage::WarningMessageLevel:
-    qInfo() << message + " at " + lineNumber + " by source ID " + sourceID;
-    break;
-  case QWebEnginePage::ErrorMessageLevel:
-    qWarning() << message + " at " + lineNumber + " by source ID " + sourceID;
-    break;
-  default:
-    break;
+  if (isQtPlexLog) {
+    qInfo() << "JS Console: " << message.mid(JS_QTPLEX_TAG.length() + 1);
+  }
+  else {
+    qDebug() << message;
   }
 }
