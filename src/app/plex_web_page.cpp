@@ -1,8 +1,8 @@
 #include "../../include/plex_web_page.h"
 #include "../../include/constants.h"
 #include "../../include/javascript_loader.h"
-#include <QDebug>
 #include <QApplication>
+#include <QDebug>
 #include <QWebEngineScript>
 
 PlexWebPage::PlexWebPage() {
@@ -27,49 +27,37 @@ PlexWebPage::~PlexWebPage() = default;
 
 void PlexWebPage::finishedLoading(bool isSuccess) {
 
-    if(isSuccess == false) {
+  if (isSuccess == false) {
 
-        qFatal("Page failed to load!");
-        QApplication::exit(EXIT_CODE_FAILURE);
-    }
+    qFatal("Page failed to load!");
+    QApplication::exit(EXIT_CODE_FAILURE);
+  }
 
-    loadAndRunScript("commonLibrary.js");
-    pageReady = true;
+  loadAndRunScript("commonLibrary.js");
+  pageReady = true;
 }
 
-void PlexWebPage::stopPlayback() {
+void PlexWebPage::stopPlayback() { loadAndRunScript("executeStop.js"); }
 
-  loadAndRunScript("executeStop.js");
-}
+void PlexWebPage::togglePlayback() { loadAndRunScript("executePlayPause.js"); }
 
-void PlexWebPage::togglePlayback() {
+void PlexWebPage::forwardTrack() { loadAndRunScript("executeForward.js"); }
 
-  loadAndRunScript("executePlayPause.js");
-}
-
-void PlexWebPage::forwardTrack() {
-
-  loadAndRunScript("executeForward.js");
-}
-
-void PlexWebPage::previousTrack() {
-
-  loadAndRunScript("executePrevious.js");
-}
+void PlexWebPage::previousTrack() { loadAndRunScript("executePrevious.js"); }
 
 void PlexWebPage::loadAndRunScript(QString scriptName) {
 
-    auto validateExecution = [scriptName](const QVariant &result) {
+  auto validateExecution = [scriptName](const QVariant &result) {
+    bool isSuccessful = result.toString() == "true";
 
-        bool isSuccessful = result.toString() == "true";
+    if (isSuccessful == false) {
+      qWarning() << "Failed to execute script " + scriptName;
+    }
+  };
 
-        if(isSuccessful == false) {
-            qWarning() << "Failed to execute script " + scriptName;
-        }
-    };
-
-    QString jsFunction = JavaScriptLoader::loadScriptByName(scriptName);
-    this->runJavaScript(jsFunction, QWebEngineScript::ApplicationWorld, validateExecution);
+  QString jsFunction = JavaScriptLoader::loadScriptByName(scriptName);
+  this->runJavaScript(jsFunction, QWebEngineScript::ApplicationWorld,
+                      validateExecution);
 }
 
 void PlexWebPage::notifyTitleChanged(const QString &title) {
@@ -124,10 +112,10 @@ QString PlexWebPage::parseNotificationFromTitle(const QString &title) {
 
 void PlexWebPage::javaScriptConsoleMessage(JavaScriptConsoleMessageLevel,
                                            const QString &message, int,
-                                           const QString&) {
+                                           const QString &) {
 
-  bool isQtPlexLog = message
-          .startsWith(JS_QTPLEX_TAG, Qt::CaseSensitivity::CaseInsensitive);
+  bool isQtPlexLog =
+      message.startsWith(JS_QTPLEX_TAG, Qt::CaseSensitivity::CaseInsensitive);
 
   // If it isn't a QtPlex log and JS logging is disabled, discard.
   if (isQtPlexLog == false && LOG_JS_CONSOLE == false) {
@@ -136,8 +124,7 @@ void PlexWebPage::javaScriptConsoleMessage(JavaScriptConsoleMessageLevel,
 
   if (isQtPlexLog) {
     qInfo() << "JS Console: " << message.mid(JS_QTPLEX_TAG.length() + 1);
-  }
-  else {
+  } else {
     qDebug() << message;
   }
 }

@@ -18,7 +18,7 @@ public:
   void previousTrack();
   virtual void javaScriptConsoleMessage(JavaScriptConsoleMessageLevel,
                                         const QString &message, int,
-                                        const QString&);
+                                        const QString &);
 
 private:
   QString currentPlaybackInfo;
