@@ -1,5 +1,5 @@
 # QtPlex
-QtPlex provides a cross-platform, Linux-first solution for streaming Plex media. The application is a shallow wrapper into the standard web interface, with the added benefits of native media keyboard shortcuts.
+QtPlex provides a Linux-first solution for streaming Plex media. The application is a shallow wrapper into the standard web interface, with the added benefits of native media keyboard shortcuts.
 
 ![QtPlex GUI Example](https://i.imgur.com/6xfr4Sb.png)
 
