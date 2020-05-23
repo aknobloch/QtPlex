@@ -1,5 +1,6 @@
-#include "../../include/settings_dialog.h"
-#include "../../include/constants.h"
+#include "settings_dialog.h"
+
+#include <QDebug>
 #include <QDialogButtonBox>
 #include <QFormLayout>
 #include <QLabel>
@@ -7,55 +8,54 @@
 #include <QSettings>
 #include <QVBoxLayout>
 
-#include <QDebug>
+#include "constants.h"
 
 SettingsDialog::SettingsDialog() {
   initializeLayout();
-  setWindowTitle(tr("Plex Server Info"));
+  setWindowTitle(tr("QtPlex Settings"));
 }
 
 void SettingsDialog::initializeLayout() {
-  QFormLayout *serverInfoForm = createServerInfoForm();
+  std::unique_ptr<QFormLayout> server_info_form = createServerInfoForm();
 
-  QDialogButtonBox *confirmButtons = new QDialogButtonBox(QDialogButtonBox::Ok);
-  connect(confirmButtons, &QDialogButtonBox::accepted, this,
+  auto confirm_button =
+      std::make_unique<QDialogButtonBox>(QDialogButtonBox::Ok);
+  connect(confirm_button.get(), &QDialogButtonBox::accepted, this,
           &SettingsDialog::okPressed);
 
-  QVBoxLayout *parentLayout = new QVBoxLayout();
-  parentLayout->addItem(serverInfoForm);
-  parentLayout->addWidget(confirmButtons);
+  box_container_layout_ = std::make_unique<QVBoxLayout>();
+  box_container_layout_->addItem(server_info_form.release());
+  box_container_layout_->addWidget(confirm_button.release());
 
-  setLayout(parentLayout);
+  setLayout(box_container_layout_.get());
   resize(325, 50);
 }
 
-QFormLayout *SettingsDialog::createServerInfoForm() {
-  QFormLayout *serverForm = new QFormLayout;
-
-  this->serverAddress = new QLineEdit;
+std::unique_ptr<QFormLayout> SettingsDialog::createServerInfoForm() {
+  auto server_form = std::make_unique<QFormLayout>();
+  server_address_ = std::make_unique<QLineEdit>();
 
   QSettings settings;
-  QString userServerAddress = settings.value(SERVER_ADDRESS_KEY).toString();
+  QString userServerAddress = settings.value(kServerAddressKey).toString();
 
   if (userServerAddress.isNull()) {
-    serverAddress->setText(tr("http://192.168.1.25:32400/web"));
+    server_address_->setText(tr("http://192.168.1.25:32400/web"));
   } else {
-    serverAddress->setText(userServerAddress);
+    server_address_->setText(userServerAddress);
   }
 
-  serverForm->addRow(new QLabel(tr("Server Address:")), serverAddress);
+  server_form->addRow(new QLabel(tr("Server Address:")), server_address_.get());
+  server_form->setHorizontalSpacing(10);
+  server_form->setVerticalSpacing(5);
 
-  serverForm->setHorizontalSpacing(10);
-  serverForm->setVerticalSpacing(5);
-
-  return serverForm;
+  return server_form;
 }
 
 void SettingsDialog::okPressed() {
-  QString enteredAddress = serverAddress->text();
+  QString entered_address = server_address_->text();
 
   QSettings settings;
-  settings.setValue(SERVER_ADDRESS_KEY, enteredAddress);
+  settings.setValue(kServerAddressKey, entered_address);
 
   accept();
 }

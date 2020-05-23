@@ -1,4 +1,5 @@
-#include "../../include/javascript_loader.h"
+#include "include/javascript_loader.h"
+
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
@@ -6,14 +7,13 @@
 #include <QString>
 
 QString JavaScriptLoader::loadScriptByName(QString filename) {
+  QFile js_file;
+  js_file.setFileName(QCoreApplication::applicationDirPath() + "/js/" +
+                      filename);
+  js_file.open(QIODevice::ReadOnly);
 
-  QFile jsFile;
-  jsFile.setFileName(QCoreApplication::applicationDirPath() + "/js/" +
-                     filename);
-  jsFile.open(QIODevice::ReadOnly);
-
-  QString javascript = jsFile.readAll();
-  jsFile.close();
+  QString javascript = js_file.readAll();
+  js_file.close();
 
   return javascript;
 }
