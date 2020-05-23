@@ -1,4 +1,3 @@
-// Credit to https://evileg.com/en/post/146/
 #ifndef POPUP_H
 #define POPUP_H
 
@@ -7,36 +6,38 @@
 #include <QPropertyAnimation>
 #include <QTimer>
 #include <QWidget>
+#include <memory>
 
+// Credit to https://evileg.com/en/post/146/
 class MediaStatusNotification : public QWidget {
   Q_OBJECT
-
   Q_PROPERTY(float popupOpacity READ getPopupOpacity WRITE setPopupOpacity)
 
   void setPopupOpacity(float opacity);
   float getPopupOpacity() const;
 
-public:
-  explicit MediaStatusNotification(QWidget *parent = 0);
+ public:
+  MediaStatusNotification();
+  ~MediaStatusNotification();
 
-protected:
+ protected:
   void paintEvent(QPaintEvent *event);
 
-public slots:
+ public slots:
   void notify(QString text);
 
-private slots:
+ private slots:
   void hideAnimation();
   void show();
   void hide();
   void setPopupText(const QString &text);
 
-private:
+ private:
   QLabel label;
   QGridLayout layout;
   QPropertyAnimation animation;
   float popupOpacity;
-  QTimer *timer;
+  std::unique_ptr<QTimer> timer;
 };
 
-#endif // POPUP_H
+#endif  // POPUP_H

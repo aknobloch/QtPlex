@@ -1,4 +1,5 @@
-#include "../../include/javascript_loader.h"
+#include "include/javascript_loader.h"
+
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
@@ -6,7 +7,6 @@
 #include <QString>
 
 QString JavaScriptLoader::loadScriptByName(QString filename) {
-
   QFile jsFile;
   jsFile.setFileName(QCoreApplication::applicationDirPath() + "/js/" +
                      filename);

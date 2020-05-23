@@ -1,29 +1,31 @@
 #ifndef APPLICATIONWINDOW_H
 #define APPLICATIONWINDOW_H
 
-#include "key_events.h"
 #include <QMainWindow>
+
+#include "key_event_controller.h"
 
 class ApplicationWindow : public QMainWindow {
   Q_OBJECT
 
-public:
-  ApplicationWindow(QWidget *parent = nullptr);
+ public:
+  ApplicationWindow();
+  ~ApplicationWindow();
   void show();
 
-private:
-  KeyEventController *shortcutController;
+ private:
+  std::unique_ptr<QWebEngineView> web_engine_view_;
 
-  void initializeMenuBar();
   void initializeCentralWidget();
+  void initializeMenuBar();
+  void initializeWebEngineView(QString serverAddress);
   void setHelpWindow();
-  void setPlexView(QString serverAddress);
   bool showingHelpScreen();
 
-signals:
+ signals:
 
-public slots:
+ public slots:
   void showSettingsDialog();
 };
 
-#endif // APPLICATIONWINDOW_H
+#endif  // APPLICATIONWINDOW_H

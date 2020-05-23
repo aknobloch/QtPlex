@@ -1,9 +1,5 @@
-#include "../../include/application_window.h"
-#include "../../include/config_server_help.h"
-#include "../../include/constants.h"
-#include "../../include/key_events.h"
-#include "../../include/plex_web_page.h"
-#include "../../include/settings_dialog.h"
+#include "application_window.h"
+
 #include <QDesktopWidget>
 #include <QInputDialog>
 #include <QMenuBar>
@@ -11,8 +7,13 @@
 #include <Qt>
 #include <QtWebEngine/QtWebEngine>
 
-ApplicationWindow::ApplicationWindow(QWidget *parent) : QMainWindow(parent) {
+#include "config_server_help.h"
+#include "constants.h"
+#include "key_event_controller.h"
+#include "plex_web_page.h"
+#include "settings_dialog.h"
 
+ApplicationWindow::ApplicationWindow() {
   // Sets the initial size to fill screen
   resize(QDesktopWidget().availableGeometry(this).size());
 
@@ -20,63 +21,57 @@ ApplicationWindow::ApplicationWindow(QWidget *parent) : QMainWindow(parent) {
   initializeCentralWidget();
 }
 
-void ApplicationWindow::initializeMenuBar() {
+ApplicationWindow::~ApplicationWindow() = default;
 
-  QMenu *file = new QMenu("File");
+void ApplicationWindow::initializeMenuBar() {
+  std::unique_ptr<QMenu> file = std::make_unique<QMenu>("File");
   file->addAction("Settings", this, &ApplicationWindow::showSettingsDialog);
 
   menuBar()->setStyleSheet("background-color:rgb(244,244,244)");
-  menuBar()->addMenu(file);
+  menuBar()->addMenu(file.release());
 }
 
 void ApplicationWindow::initializeCentralWidget() {
-
   QSettings settings;
   QString serverAddress = settings.value(SERVER_ADDRESS_KEY).toString();
 
-  // If server address setting has not yet been defined
+  // If server address setting has not yet been defined,
+  // immediately show the help window to configure.
   if (serverAddress.isNull()) {
     setHelpWindow();
   } else {
-    setPlexView(serverAddress);
+    initializeWebEngineView(serverAddress);
   }
 }
 
 void ApplicationWindow::setHelpWindow() {
-
-  ConfigServerHelpScreen *help = new ConfigServerHelpScreen();
-  connect(help, &ConfigServerHelpScreen::notifyConfigButtonPressed, this,
+  std::unique_ptr<ConfigServerHelpScreen> help =
+      std::make_unique<ConfigServerHelpScreen>();
+  connect(help.get(), &ConfigServerHelpScreen::notifyConfigButtonPressed, this,
           &ApplicationWindow::showSettingsDialog);
 
-  setCentralWidget(help);
+  setCentralWidget(help.release());
 }
 
-void ApplicationWindow::setPlexView(QString serverAddress) {
-
-  PlexWebPage *page = new PlexWebPage();
+void ApplicationWindow::initializeWebEngineView(QString serverAddress) {
+  std::unique_ptr<PlexWebPage> page = std::make_unique<PlexWebPage>();
   page->setUrl(QUrl(serverAddress));
 
-  QWebEngineView *view = new QWebEngineView();
-  view->setPage(page);
-  view->show();
+  web_engine_view_ = std::make_unique<QWebEngineView>();
+  web_engine_view_->setPage(page.release());
 
-  shortcutController = new KeyEventController(page);
-  setCentralWidget(view);
+  setCentralWidget(web_engine_view_.get());
 }
 
 void ApplicationWindow::show() {
-
   if (showingHelpScreen()) {
-
     showNormal();
   } else {
-
     showMaximized();
   }
 }
 
 void ApplicationWindow::showSettingsDialog() {
-
   QSettings settings;
   QString oldServerAddress = settings.value(SERVER_ADDRESS_KEY).toString();
 
@@ -87,12 +82,10 @@ void ApplicationWindow::showSettingsDialog() {
   bool changedServerAdddress = oldServerAddress.compare(newServerAddress) != 0;
 
   if (showingHelpScreen() || changedServerAdddress) {
-
     initializeCentralWidget();
   }
 }
 
 bool ApplicationWindow::showingHelpScreen() {
-
   return dynamic_cast<ConfigServerHelpScreen *>(centralWidget());
 }

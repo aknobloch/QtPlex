@@ -1,9 +1,9 @@
-#include "../../include/application_window.h"
-#include "../../include/constants.h"
 #include <QApplication>
+#include <QDebug>
 #include <Qt>
 
-#include <QDebug>
+#include "application_window.h"
+#include "constants.h"
 
 using namespace std;
 

@@ -1,5 +1,6 @@
-#include "../../include/settings_dialog.h"
-#include "../../include/constants.h"
+#include "settings_dialog.h"
+
+#include <QDebug>
 #include <QDialogButtonBox>
 #include <QFormLayout>
 #include <QLabel>
@@ -7,44 +8,42 @@
 #include <QSettings>
 #include <QVBoxLayout>
 
-#include <QDebug>
+#include "constants.h"
 
 SettingsDialog::SettingsDialog() {
   initializeLayout();
-  setWindowTitle(tr("Plex Server Info"));
+  setWindowTitle(tr("QtPlex Settings"));
 }
 
 void SettingsDialog::initializeLayout() {
-  QFormLayout *serverInfoForm = createServerInfoForm();
+  std::unique_ptr<QFormLayout> serverInfoForm = createServerInfoForm();
 
   QDialogButtonBox *confirmButtons = new QDialogButtonBox(QDialogButtonBox::Ok);
   connect(confirmButtons, &QDialogButtonBox::accepted, this,
           &SettingsDialog::okPressed);
 
-  QVBoxLayout *parentLayout = new QVBoxLayout();
-  parentLayout->addItem(serverInfoForm);
+  auto parentLayout = std::make_unique<QVBoxLayout>();
+  parentLayout->addItem(serverInfoForm.release());
   parentLayout->addWidget(confirmButtons);
 
-  setLayout(parentLayout);
+  setLayout(parentLayout.release());
   resize(325, 50);
 }
 
-QFormLayout *SettingsDialog::createServerInfoForm() {
-  QFormLayout *serverForm = new QFormLayout;
-
-  this->serverAddress = new QLineEdit;
+std::unique_ptr<QFormLayout> SettingsDialog::createServerInfoForm() {
+  auto serverForm = std::make_unique<QFormLayout>();
+  this->server_address_ = std::make_unique<QLineEdit>();
 
   QSettings settings;
   QString userServerAddress = settings.value(SERVER_ADDRESS_KEY).toString();
 
   if (userServerAddress.isNull()) {
-    serverAddress->setText(tr("http://192.168.1.25:32400/web"));
+    server_address_->setText(tr("http://192.168.1.25:32400/web"));
   } else {
-    serverAddress->setText(userServerAddress);
+    server_address_->setText(userServerAddress);
   }
 
-  serverForm->addRow(new QLabel(tr("Server Address:")), serverAddress);
-
+  serverForm->addRow(new QLabel(tr("Server Address:")), server_address_.get());
   serverForm->setHorizontalSpacing(10);
   serverForm->setVerticalSpacing(5);
 
@@ -52,7 +51,7 @@ QFormLayout *SettingsDialog::createServerInfoForm() {
 }
 
 void SettingsDialog::okPressed() {
-  QString enteredAddress = serverAddress->text();
+  QString enteredAddress = server_address_->text();
 
   QSettings settings;
   settings.setValue(SERVER_ADDRESS_KEY, enteredAddress);
