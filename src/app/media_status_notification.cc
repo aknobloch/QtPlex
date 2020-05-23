@@ -1,6 +1,5 @@
-// Credit to https://evileg.com/en/post/146/
+#include "media_status_notification.h"
 
-#include "../../include/media_status_notification.h"
 #include <QApplication>
 #include <QDebug>
 #include <QDesktopWidget>
@@ -8,35 +7,38 @@
 #include <QScreen>
 #include <QWindow>
 
-MediaStatusNotification::MediaStatusNotification(QWidget *parent)
-    : QWidget(parent) {
-  setWindowFlags(Qt::FramelessWindowHint | // Disable window decoration
-                 Qt::Tool | // Discard display in a separate window
-                 Qt::WindowStaysOnTopHint);   // Set on top of all windows
-  setAttribute(Qt::WA_TranslucentBackground); // Indicates that the background
-                                              // will be transparent
-  setAttribute(Qt::WA_ShowWithoutActivating); // At the show, the widget does
-                                              // not get the focus automatically
+MediaStatusNotification::MediaStatusNotification() {
+  setWindowFlags(Qt::FramelessWindowHint |  // Disable window decoration
+                 Qt::Tool |  // Discard display in a separate window
+                 Qt::WindowStaysOnTopHint);    // Set on top of all windows
+  setAttribute(Qt::WA_TranslucentBackground);  // Indicates that the background
+                                               // will be transparent
+  setAttribute(
+      Qt::WA_ShowWithoutActivating);  // At the show, the widget does
+                                      // not get the focus automatically
 
-  animation.setTargetObject(this);           // Set the target animation
-  animation.setPropertyName("popupOpacity"); //
+  animation.setTargetObject(this);            // Set the target animation
+  animation.setPropertyName("popupOpacity");  //
   connect(&animation, &QAbstractAnimation::finished, this,
           &MediaStatusNotification::hide);
 
   label.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-  label.setStyleSheet("QLabel { color : white; "
-                      "margin-top: 6px;"
-                      "margin-bottom: 6px;"
-                      "margin-left: 10px;"
-                      "margin-right: 10px; }");
+  label.setStyleSheet(
+      "QLabel { color : white; "
+      "margin-top: 6px;"
+      "margin-bottom: 6px;"
+      "margin-left: 10px;"
+      "margin-right: 10px; }");
 
   layout.addWidget(&label, 0, 0);
   setLayout(&layout);
 
-  timer = new QTimer();
-  connect(timer, &QTimer::timeout, this,
+  timer = std::make_unique<QTimer>();
+  connect(timer.release(), &QTimer::timeout, this,
           &MediaStatusNotification::hideAnimation);
 }
+
+MediaStatusNotification::~MediaStatusNotification() = default;
 
 void MediaStatusNotification::paintEvent(QPaintEvent *event) {
   Q_UNUSED(event)
@@ -62,23 +64,23 @@ void MediaStatusNotification::notify(QString text) {
 }
 
 void MediaStatusNotification::setPopupText(const QString &text) {
-  label.setText(text); // Set the text in the Label
-  adjustSize();        // With the recalculation notice sizes
+  label.setText(text);  // Set the text in the Label
+  adjustSize();         // With the recalculation notice sizes
 }
 
 void MediaStatusNotification::show() {
-  setWindowOpacity(0.0); // Set the transparency to zero
+  setWindowOpacity(0.0);  // Set the transparency to zero
 
-  animation.setDuration(100); // Configuring the duration of the animation
+  animation.setDuration(100);  // Configuring the duration of the animation
   animation.setStartValue(
-      0.0);                   // The start value is 0 (fully transparent widget)
-  animation.setEndValue(1.0); // End - completely opaque widget
+      0.0);  // The start value is 0 (fully transparent widget)
+  animation.setEndValue(1.0);  // End - completely opaque widget
   QRect currentScreenSize = QGuiApplication::primaryScreen()->geometry();
 
-  setGeometry(currentScreenSize.width() - 20 - width() + currentScreenSize.x(),
-              currentScreenSize.height() - 20 - height() +
-                  currentScreenSize.y(),
-              width(), height());
+  setGeometry(
+      currentScreenSize.width() - 20 - width() + currentScreenSize.x(),
+      currentScreenSize.height() - 20 - height() + currentScreenSize.y(),
+      width(), height());
   QWidget::show();
 
   animation.start();

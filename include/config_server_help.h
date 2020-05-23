@@ -4,23 +4,25 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QWidget>
+#include <memory>
 
 class ConfigServerHelpScreen : public QWidget {
   Q_OBJECT
-public:
-  explicit ConfigServerHelpScreen(QWidget *parent = nullptr);
+ public:
+  ConfigServerHelpScreen();
+  ~ConfigServerHelpScreen();
 
-private:
+ private:
   void initializeLayout();
-  QLabel *createBanner();
-  QLabel *createInfoLabel();
-  QPushButton *createConfigButton();
+  std::unique_ptr<QLabel> createBanner();
+  std::unique_ptr<QLabel> createInfoLabel();
+  std::unique_ptr<QPushButton> createConfigButton();
 
-signals:
+ signals:
   void notifyConfigButtonPressed();
 
-public slots:
+ public slots:
   void configButtonPressed();
 };
 
-#endif // HELPWIDGET_H
+#endif  // HELPWIDGET_H

@@ -1,15 +1,18 @@
-#ifndef LOGFILTERWEBPAGE_H
-#define LOGFILTERWEBPAGE_H
-#include "media_status_notification.h"
+#ifndef PLEXWEBPAGE_H
+#define PLEXWEBPAGE_H
+
 #include <QObject>
 #include <QWebEngineView>
 #include <Qt>
 #include <QtWebEngine/QtWebEngine>
 
+#include "key_event_controller.h"
+#include "media_status_notification.h"
+
 class PlexWebPage : public QWebEnginePage {
   Q_OBJECT
 
-public:
+ public:
   PlexWebPage();
   ~PlexWebPage();
   void stopPlayback();
@@ -20,16 +23,17 @@ public:
                                         const QString &message, int,
                                         const QString &);
 
-private:
-  QString currentPlaybackInfo;
-  MediaStatusNotification *mediaStatusNotifier;
-  bool pageReady;
-  void loadAndRunScript(QString scriptName);
-  void refreshCurrentPlaybackInfo();
+ private:
   bool isMediaPlaybackTitle(const QString &title);
+  void loadAndRunScript(QString scriptName);
   QString parseNotificationFromTitle(const QString &title);
+  void refreshCurrentPlaybackInfo();
+  QString current_playback_info_;
+  std::unique_ptr<KeyEventController> key_event_controller_;
+  std::unique_ptr<MediaStatusNotification> media_status_notifier_;
 
-private slots:
+ private slots:
+  void finishInitialization(bool isSuccess);
   /**
    * A title change indicates that the playback status of the
    * internal media has changed, since Plex updates the title with
@@ -37,6 +41,5 @@ private slots:
    * way I could find to react to changing songs.
    */
   void notifyTitleChanged(const QString &title);
-  void finishedLoading(bool isSuccess);
 };
-#endif // LOGFILTERWEBPAGE_H
+#endif  // PLEXWEBPAGE_H
