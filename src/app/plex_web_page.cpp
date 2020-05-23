@@ -45,13 +45,15 @@ void PlexWebPage::finishInitialization(bool is_page_loaded) {
   loadAndRunScript("commonLibrary.js");
 }
 
-void PlexWebPage::stopPlayback() { loadAndRunScript("executeStop.js"); }
+void PlexWebPage::stopPlayback() { loadAndRunScript(kJSFileExecuteStop); }
 
-void PlexWebPage::togglePlayback() { loadAndRunScript("executePlayPause.js"); }
+void PlexWebPage::togglePlayback() {
+  loadAndRunScript(kJSFileExecutePlayPause);
+}
 
-void PlexWebPage::forwardTrack() { loadAndRunScript("executeForward.js"); }
+void PlexWebPage::forwardTrack() { loadAndRunScript(kJSFileExecuteForward); }
 
-void PlexWebPage::previousTrack() { loadAndRunScript("executePrevious.js"); }
+void PlexWebPage::previousTrack() { loadAndRunScript(kJSFileExecutePrevious); }
 
 void PlexWebPage::loadAndRunScript(QString script_name) {
   auto validate_execution_callback = [script_name](const QVariant &result) {

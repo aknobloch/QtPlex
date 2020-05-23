@@ -11,5 +11,10 @@ static const bool kLogJavascriptConsole = false;
 static const QString kJavascriptQtPlexTag = "[QtPlex]";
 static const int kMaxNotificationLineLength = 30;
 static const int kFailureExitCode = 1;
+static const QString kJSFileCommonLibrary = "common_library.js";
+static const QString kJSFileExecuteForward = "execute_forward.js";
+static const QString kJSFileExecutePlayPause = "execute_play_pause.js";
+static const QString kJSFileExecutePrevious = "execute_previous.js";
+static const QString kJSFileExecuteStop = "execute_stop.js";
 
 #endif  // CONSTANTS_H
