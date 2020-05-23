@@ -18,13 +18,14 @@ SettingsDialog::SettingsDialog() {
 void SettingsDialog::initializeLayout() {
   std::unique_ptr<QFormLayout> server_info_form = createServerInfoForm();
 
-  QDialogButtonBox *confirm_button = new QDialogButtonBox(QDialogButtonBox::Ok);
-  connect(confirm_button, &QDialogButtonBox::accepted, this,
+  auto confirm_button =
+      std::make_unique<QDialogButtonBox>(QDialogButtonBox::Ok);
+  connect(confirm_button.get(), &QDialogButtonBox::accepted, this,
           &SettingsDialog::okPressed);
 
   box_container_layout_ = std::make_unique<QVBoxLayout>();
   box_container_layout_->addItem(server_info_form.release());
-  box_container_layout_->addWidget(confirm_button);
+  box_container_layout_->addWidget(confirm_button.release());
 
   setLayout(box_container_layout_.get());
   resize(325, 50);
