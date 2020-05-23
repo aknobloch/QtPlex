@@ -34,7 +34,7 @@ MediaStatusNotification::MediaStatusNotification() {
   setLayout(&layout);
 
   timer = std::make_unique<QTimer>();
-  connect(timer.release(), &QTimer::timeout, this,
+  connect(timer.get(), &QTimer::timeout, this,
           &MediaStatusNotification::hideAnimation);
 }
 
