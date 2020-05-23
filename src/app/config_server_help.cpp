@@ -6,11 +6,11 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
-ConfigServerHelpScreen::ConfigServerHelpScreen() { initializeLayout(); }
-ConfigServerHelpScreen::~ConfigServerHelpScreen() = default;
+FirstTimeSetupWidget::FirstTimeSetupWidget() { initializeLayout(); }
+FirstTimeSetupWidget::~FirstTimeSetupWidget() = default;
 
-void ConfigServerHelpScreen::initializeLayout() {
-  QVBoxLayout *parentLayout = new QVBoxLayout();
+void FirstTimeSetupWidget::initializeLayout() {
+  box_container_layout_ = std::make_unique<QVBoxLayout>();
 
   std::unique_ptr<QLabel> bannerLabel = createBanner();
   std::unique_ptr<QLabel> infoLabel = createInfoLabel();
@@ -21,49 +21,49 @@ void ConfigServerHelpScreen::initializeLayout() {
   buttonWrapper->addWidget(configButton.release());
   buttonWrapper->setContentsMargins(0, 75, 0, 0);
 
-  parentLayout->addWidget(bannerLabel.get());
-  parentLayout->addWidget(infoLabel.get());
-  parentLayout->addItem(buttonWrapper.get());
+  box_container_layout_->addWidget(bannerLabel.get());
+  box_container_layout_->addWidget(infoLabel.get());
+  box_container_layout_->addItem(buttonWrapper.get());
 
-  parentLayout->setAlignment(bannerLabel.release(),
-                             Qt::AlignHCenter | Qt::AlignTop);
-  parentLayout->setAlignment(infoLabel.release(),
-                             Qt::AlignHCenter | Qt::AlignTop);
-  parentLayout->setAlignment(buttonWrapper.release(),
-                             Qt::AlignHCenter | Qt::AlignTop);
+  box_container_layout_->setAlignment(bannerLabel.release(),
+                                      Qt::AlignHCenter | Qt::AlignTop);
+  box_container_layout_->setAlignment(infoLabel.release(),
+                                      Qt::AlignHCenter | Qt::AlignTop);
+  box_container_layout_->setAlignment(buttonWrapper.release(),
+                                      Qt::AlignHCenter | Qt::AlignTop);
 
-  parentLayout->setContentsMargins(50, 10, 50, 25);
+  box_container_layout_->setContentsMargins(50, 10, 50, 25);
 
-  setLayout(parentLayout);
+  setLayout(box_container_layout_.get());
 }
 
-std::unique_ptr<QLabel> ConfigServerHelpScreen::createBanner() {
-  auto bannerImage = std::make_unique<QImage>(":/images/res/banner.png");
-  auto bannerLabel = std::make_unique<QLabel>();
-  bannerLabel->setPixmap(QPixmap::fromImage(*bannerImage));
+std::unique_ptr<QLabel> FirstTimeSetupWidget::createBanner() {
+  auto banner_image = std::make_unique<QImage>(":/images/res/banner.png");
+  auto banner_label = std::make_unique<QLabel>();
+  banner_label->setPixmap(QPixmap::fromImage(*banner_image));
 
-  return bannerLabel;
+  return banner_label;
 }
 
-std::unique_ptr<QLabel> ConfigServerHelpScreen::createInfoLabel() {
-  auto infoLabel = std::make_unique<QLabel>();
-  infoLabel->setText(
+std::unique_ptr<QLabel> FirstTimeSetupWidget::createInfoLabel() {
+  auto info_label = std::make_unique<QLabel>();
+  info_label->setText(
       "<font color='#cc7c19'>Looks like you don't have a server "
       "configured.</font>");
-  QFont infoFont("Arial", 28, QFont::Bold);
-  infoLabel->setFont(infoFont);
+  QFont info_font("Arial", 28, QFont::Bold);
+  info_label->setFont(info_font);
 
-  return infoLabel;
+  return info_label;
 }
 
-std::unique_ptr<QPushButton> ConfigServerHelpScreen::createConfigButton() {
-  auto configButton = std::make_unique<QPushButton>();
+std::unique_ptr<QPushButton> FirstTimeSetupWidget::createConfigButton() {
+  auto config_button = std::make_unique<QPushButton>();
 
   // text properties
-  configButton->setText("Config Server");
+  config_button->setText("Config Server");
   QFont buttonFont("Arial", 18, QFont::Bold);
   buttonFont.setCapitalization(QFont::SmallCaps);
-  configButton->setFont(buttonFont);
+  config_button->setFont(buttonFont);
 
   // button style
   QString roundedButtonStyle =
@@ -71,21 +71,21 @@ std::unique_ptr<QPushButton> ConfigServerHelpScreen::createConfigButton() {
       "border-radius:10px;"
       "border-width:25px;"
       "border-color:red;";
-  configButton->setStyleSheet(roundedButtonStyle);
+  config_button->setStyleSheet(roundedButtonStyle);
 
   // placement and size
-  configButton->setMinimumWidth(200);
-  configButton->setMinimumHeight(75);
-  configButton->setContentsMargins(100, 100, 100, 100);
+  config_button->setMinimumWidth(200);
+  config_button->setMinimumHeight(75);
+  config_button->setContentsMargins(100, 100, 100, 100);
 
-  configButton->setFocusPolicy(Qt::NoFocus);
+  config_button->setFocusPolicy(Qt::NoFocus);
 
-  connect(configButton.get(), &QPushButton::clicked, this,
-          &ConfigServerHelpScreen::configButtonPressed);
+  connect(config_button.get(), &QPushButton::clicked, this,
+          &FirstTimeSetupWidget::configButtonPressed);
 
-  return configButton;
+  return config_button;
 }
 
-void ConfigServerHelpScreen::configButtonPressed() {
+void FirstTimeSetupWidget::configButtonPressed() {
   emit notifyConfigButtonPressed();
 }

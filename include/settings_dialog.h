@@ -16,6 +16,7 @@ class SettingsDialog : public QDialog {
  private:
   std::unique_ptr<QFormLayout> createServerInfoForm();
   std::unique_ptr<QLineEdit> server_address_;
+  std::unique_ptr<QVBoxLayout> box_container_layout_;
 
  public slots:
   void okPressed();

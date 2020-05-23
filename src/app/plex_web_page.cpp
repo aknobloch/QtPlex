@@ -36,8 +36,8 @@ PlexWebPage::PlexWebPage() {
 
 PlexWebPage::~PlexWebPage() = default;
 
-void PlexWebPage::finishInitialization(bool isPageLoaded) {
-  if (isPageLoaded == false) {
+void PlexWebPage::finishInitialization(bool is_page_loaded) {
+  if (is_page_loaded == false) {
     qFatal("Page failed to load!");
     QApplication::exit(EXIT_CODE_FAILURE);
   }
@@ -53,17 +53,17 @@ void PlexWebPage::forwardTrack() { loadAndRunScript("executeForward.js"); }
 
 void PlexWebPage::previousTrack() { loadAndRunScript("executePrevious.js"); }
 
-void PlexWebPage::loadAndRunScript(QString scriptName) {
-  auto validateExecution = [scriptName](const QVariant &result) {
-    bool isSuccessful = result.toString() == "true";
-    if (isSuccessful == false) {
-      qWarning() << "Failed to execute script " + scriptName;
+void PlexWebPage::loadAndRunScript(QString script_name) {
+  auto validate_execution_callback = [script_name](const QVariant &result) {
+    bool was_execution_successful = result.toString() == "true";
+    if (!was_execution_successful) {
+      qWarning() << "Failed to execute script " + script_name;
     }
   };
 
-  QString jsFunction = JavaScriptLoader::loadScriptByName(scriptName);
-  this->runJavaScript(jsFunction, QWebEngineScript::ApplicationWorld,
-                      validateExecution);
+  QString js_function = JavaScriptLoader::loadScriptByName(script_name);
+  this->runJavaScript(js_function, QWebEngineScript::ApplicationWorld,
+                      validate_execution_callback);
 }
 
 void PlexWebPage::notifyTitleChanged(const QString &title) {
@@ -83,15 +83,15 @@ void PlexWebPage::notifyTitleChanged(const QString &title) {
 }
 
 bool PlexWebPage::isMediaPlaybackTitle(const QString &title) {
-  QRegularExpression playbackRegex("▶ (.+)-(.+)");
-  return playbackRegex.match(title).hasMatch();
+  QRegularExpression check_if_playing_regex("▶ (.+)-(.+)");
+  return check_if_playing_regex.match(title).hasMatch();
 }
 
 QString PlexWebPage::parseNotificationFromTitle(const QString &title) {
-  QStringList splitTitle = title.split("-");
+  QStringList split_title = title.split("-");
 
   // Parse the artist name
-  QString artist = splitTitle.first();
+  QString artist = split_title.first();
   artist = artist.mid(artist.indexOf("▶") + 1);
 
   if (artist.length() > MAX_NOTIFICATION_LINE_LENGTH) {
@@ -99,7 +99,7 @@ QString PlexWebPage::parseNotificationFromTitle(const QString &title) {
   }
 
   // Parse the track name
-  QString track = splitTitle.last();
+  QString track = split_title.last();
 
   if (track.length() > MAX_NOTIFICATION_LINE_LENGTH) {
     track = track.left(MAX_NOTIFICATION_LINE_LENGTH - 3) + "...";
@@ -114,15 +114,15 @@ QString PlexWebPage::parseNotificationFromTitle(const QString &title) {
 void PlexWebPage::javaScriptConsoleMessage(JavaScriptConsoleMessageLevel,
                                            const QString &message, int,
                                            const QString &) {
-  bool isQtPlexLog =
+  bool is_qtplex_log =
       message.startsWith(JS_QTPLEX_TAG, Qt::CaseSensitivity::CaseInsensitive);
 
   // If it isn't a QtPlex log and JS logging is disabled, discard.
-  if (isQtPlexLog == false && LOG_JS_CONSOLE == false) {
+  if (is_qtplex_log == false && LOG_JS_CONSOLE == false) {
     return;
   }
 
-  if (isQtPlexLog) {
+  if (is_qtplex_log) {
     qInfo() << "JS Console: " << message.mid(JS_QTPLEX_TAG.length() + 1);
   } else {
     qDebug() << message;

@@ -7,13 +7,13 @@
 #include <QString>
 
 QString JavaScriptLoader::loadScriptByName(QString filename) {
-  QFile jsFile;
-  jsFile.setFileName(QCoreApplication::applicationDirPath() + "/js/" +
-                     filename);
-  jsFile.open(QIODevice::ReadOnly);
+  QFile js_file;
+  js_file.setFileName(QCoreApplication::applicationDirPath() + "/js/" +
+                      filename);
+  js_file.open(QIODevice::ReadOnly);
 
-  QString javascript = jsFile.readAll();
-  jsFile.close();
+  QString javascript = js_file.readAll();
+  js_file.close();
 
   return javascript;
 }

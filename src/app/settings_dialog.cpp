@@ -16,23 +16,23 @@ SettingsDialog::SettingsDialog() {
 }
 
 void SettingsDialog::initializeLayout() {
-  std::unique_ptr<QFormLayout> serverInfoForm = createServerInfoForm();
+  std::unique_ptr<QFormLayout> server_info_form = createServerInfoForm();
 
-  QDialogButtonBox *confirmButtons = new QDialogButtonBox(QDialogButtonBox::Ok);
-  connect(confirmButtons, &QDialogButtonBox::accepted, this,
+  QDialogButtonBox *confirm_button = new QDialogButtonBox(QDialogButtonBox::Ok);
+  connect(confirm_button, &QDialogButtonBox::accepted, this,
           &SettingsDialog::okPressed);
 
-  auto parentLayout = std::make_unique<QVBoxLayout>();
-  parentLayout->addItem(serverInfoForm.release());
-  parentLayout->addWidget(confirmButtons);
+  box_container_layout_ = std::make_unique<QVBoxLayout>();
+  box_container_layout_->addItem(server_info_form.release());
+  box_container_layout_->addWidget(confirm_button);
 
-  setLayout(parentLayout.release());
+  setLayout(box_container_layout_.get());
   resize(325, 50);
 }
 
 std::unique_ptr<QFormLayout> SettingsDialog::createServerInfoForm() {
-  auto serverForm = std::make_unique<QFormLayout>();
-  this->server_address_ = std::make_unique<QLineEdit>();
+  auto server_form = std::make_unique<QFormLayout>();
+  server_address_ = std::make_unique<QLineEdit>();
 
   QSettings settings;
   QString userServerAddress = settings.value(SERVER_ADDRESS_KEY).toString();
@@ -43,18 +43,18 @@ std::unique_ptr<QFormLayout> SettingsDialog::createServerInfoForm() {
     server_address_->setText(userServerAddress);
   }
 
-  serverForm->addRow(new QLabel(tr("Server Address:")), server_address_.get());
-  serverForm->setHorizontalSpacing(10);
-  serverForm->setVerticalSpacing(5);
+  server_form->addRow(new QLabel(tr("Server Address:")), server_address_.get());
+  server_form->setHorizontalSpacing(10);
+  server_form->setVerticalSpacing(5);
 
-  return serverForm;
+  return server_form;
 }
 
 void SettingsDialog::okPressed() {
-  QString enteredAddress = server_address_->text();
+  QString entered_address = server_address_->text();
 
   QSettings settings;
-  settings.setValue(SERVER_ADDRESS_KEY, enteredAddress);
+  settings.setValue(SERVER_ADDRESS_KEY, entered_address);
 
   accept();
 }
