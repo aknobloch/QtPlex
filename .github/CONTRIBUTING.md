@@ -10,3 +10,4 @@ file->addAction("Settings", this, &ApplicationWindow::showSettingsDialog);
 menuBar()->setStyleSheet("background-color:rgb(244,244,244)");
 menuBar()->addMenu(file.release());
 ```
+Any pointers which are direct descendents of a custom object should be declared in the private member variables of the function. References to the pointer should be retrieved via `std::get()`.
