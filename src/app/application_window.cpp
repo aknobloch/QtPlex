@@ -33,24 +33,24 @@ void ApplicationWindow::initializeMenuBar() {
 
 void ApplicationWindow::initializeCentralWidget() {
   QSettings settings;
-  QString serverAddress = settings.value(SERVER_ADDRESS_KEY).toString();
+  QString server_address = settings.value(SERVER_ADDRESS_KEY).toString();
 
   // If server address setting has not yet been defined,
   // immediately show the help window to configure.
-  if (serverAddress.isNull()) {
+  if (server_address.isNull()) {
     setHelpWindow();
   } else {
-    initializeWebEngineView(serverAddress);
+    initializeWebEngineView(server_address);
   }
 }
 
 void ApplicationWindow::setHelpWindow() {
-  std::unique_ptr<ConfigServerHelpScreen> help =
-      std::make_unique<ConfigServerHelpScreen>();
-  connect(help.get(), &ConfigServerHelpScreen::notifyConfigButtonPressed, this,
-          &ApplicationWindow::showSettingsDialog);
+  std::unique_ptr<FirstTimeSetupWidget> help_view =
+      std::make_unique<FirstTimeSetupWidget>();
+  connect(help_view.get(), &FirstTimeSetupWidget::notifyConfigButtonPressed,
+          this, &ApplicationWindow::showSettingsDialog);
 
-  setCentralWidget(help.release());
+  setCentralWidget(help_view.release());
 }
 
 void ApplicationWindow::initializeWebEngineView(QString serverAddress) {
@@ -73,19 +73,20 @@ void ApplicationWindow::show() {
 
 void ApplicationWindow::showSettingsDialog() {
   QSettings settings;
-  QString oldServerAddress = settings.value(SERVER_ADDRESS_KEY).toString();
+  QString old_server_address = settings.value(SERVER_ADDRESS_KEY).toString();
 
   SettingsDialog options;
   options.exec();
 
   QString newServerAddress = settings.value(SERVER_ADDRESS_KEY).toString();
-  bool changedServerAdddress = oldServerAddress.compare(newServerAddress) != 0;
+  bool user_changed_server_address =
+      old_server_address.compare(newServerAddress) != 0;
 
-  if (showingHelpScreen() || changedServerAdddress) {
+  if (showingHelpScreen() || user_changed_server_address) {
     initializeCentralWidget();
   }
 }
 
 bool ApplicationWindow::showingHelpScreen() {
-  return dynamic_cast<ConfigServerHelpScreen *>(centralWidget());
+  return dynamic_cast<FirstTimeSetupWidget *>(centralWidget());
 }
