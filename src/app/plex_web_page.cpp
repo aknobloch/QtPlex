@@ -8,7 +8,7 @@
 #include "javascript_loader.h"
 
 PlexWebPage::PlexWebPage() {
-  if (LOG_JS_CONSOLE == false) {
+  if (kLogJavascriptConsole == false) {
     qWarning() << "Disabling general JS console logging.";
   }
 
@@ -39,7 +39,7 @@ PlexWebPage::~PlexWebPage() = default;
 void PlexWebPage::finishInitialization(bool is_page_loaded) {
   if (is_page_loaded == false) {
     qFatal("Page failed to load!");
-    QApplication::exit(EXIT_CODE_FAILURE);
+    QApplication::exit(kFailureExitCode);
   }
 
   loadAndRunScript("commonLibrary.js");
@@ -94,15 +94,15 @@ QString PlexWebPage::parseNotificationFromTitle(const QString &title) {
   QString artist = split_title.first();
   artist = artist.mid(artist.indexOf("▶") + 1);
 
-  if (artist.length() > MAX_NOTIFICATION_LINE_LENGTH) {
-    artist = artist.left(MAX_NOTIFICATION_LINE_LENGTH - 3) + "...";
+  if (artist.length() > kMaxNotificationLineLength) {
+    artist = artist.left(kMaxNotificationLineLength - 3) + "...";
   }
 
   // Parse the track name
   QString track = split_title.last();
 
-  if (track.length() > MAX_NOTIFICATION_LINE_LENGTH) {
-    track = track.left(MAX_NOTIFICATION_LINE_LENGTH - 3) + "...";
+  if (track.length() > kMaxNotificationLineLength) {
+    track = track.left(kMaxNotificationLineLength - 3) + "...";
   }
 
   return "<b>" + track +
@@ -114,16 +114,16 @@ QString PlexWebPage::parseNotificationFromTitle(const QString &title) {
 void PlexWebPage::javaScriptConsoleMessage(JavaScriptConsoleMessageLevel,
                                            const QString &message, int,
                                            const QString &) {
-  bool is_qtplex_log =
-      message.startsWith(JS_QTPLEX_TAG, Qt::CaseSensitivity::CaseInsensitive);
+  bool is_qtplex_log = message.startsWith(kJavascriptQtPlexTag,
+                                          Qt::CaseSensitivity::CaseInsensitive);
 
   // If it isn't a QtPlex log and JS logging is disabled, discard.
-  if (is_qtplex_log == false && LOG_JS_CONSOLE == false) {
+  if (is_qtplex_log == false && kLogJavascriptConsole == false) {
     return;
   }
 
   if (is_qtplex_log) {
-    qInfo() << "JS Console: " << message.mid(JS_QTPLEX_TAG.length() + 1);
+    qInfo() << "JS Console: " << message.mid(kJavascriptQtPlexTag.length() + 1);
   } else {
     qDebug() << message;
   }

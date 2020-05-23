@@ -35,7 +35,7 @@ std::unique_ptr<QFormLayout> SettingsDialog::createServerInfoForm() {
   server_address_ = std::make_unique<QLineEdit>();
 
   QSettings settings;
-  QString userServerAddress = settings.value(SERVER_ADDRESS_KEY).toString();
+  QString userServerAddress = settings.value(kServerAddressKey).toString();
 
   if (userServerAddress.isNull()) {
     server_address_->setText(tr("http://192.168.1.25:32400/web"));
@@ -54,7 +54,7 @@ void SettingsDialog::okPressed() {
   QString entered_address = server_address_->text();
 
   QSettings settings;
-  settings.setValue(SERVER_ADDRESS_KEY, entered_address);
+  settings.setValue(kServerAddressKey, entered_address);
 
   accept();
 }

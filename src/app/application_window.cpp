@@ -33,7 +33,7 @@ void ApplicationWindow::initializeMenuBar() {
 
 void ApplicationWindow::initializeCentralWidget() {
   QSettings settings;
-  QString server_address = settings.value(SERVER_ADDRESS_KEY).toString();
+  QString server_address = settings.value(kServerAddressKey).toString();
 
   // If server address setting has not yet been defined,
   // immediately show the help window to configure.
@@ -73,12 +73,12 @@ void ApplicationWindow::show() {
 
 void ApplicationWindow::showSettingsDialog() {
   QSettings settings;
-  QString old_server_address = settings.value(SERVER_ADDRESS_KEY).toString();
+  QString old_server_address = settings.value(kServerAddressKey).toString();
 
   SettingsDialog options;
   options.exec();
 
-  QString newServerAddress = settings.value(SERVER_ADDRESS_KEY).toString();
+  QString newServerAddress = settings.value(kServerAddressKey).toString();
   bool user_changed_server_address =
       old_server_address.compare(newServerAddress) != 0;
 
