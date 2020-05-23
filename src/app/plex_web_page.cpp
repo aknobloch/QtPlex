@@ -26,12 +26,12 @@ PlexWebPage::PlexWebPage() {
           &PlexWebPage::togglePlayback);
 
   // Title change indicates that playback state has changed
-  connect(this, SIGNAL(titleChanged(const QString)), this,
-          SLOT(notifyTitleChanged(const QString &)));
+  connect(this, &PlexWebPage::titleChanged, this,
+          &PlexWebPage::notifyTitleChanged);
 
   // Initialize once finished loading
-  connect(this, SIGNAL(loadFinished(bool)), this,
-          SLOT(finishInitialization(bool)));
+  connect(this, &PlexWebPage::loadFinished, this,
+          &PlexWebPage::finishInitialization);
 }
 
 PlexWebPage::~PlexWebPage() = default;

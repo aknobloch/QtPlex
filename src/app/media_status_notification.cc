@@ -17,8 +17,8 @@ MediaStatusNotification::MediaStatusNotification() {
       Qt::WA_ShowWithoutActivating);  // At the show, the widget does
                                       // not get the focus automatically
 
-  animation_.setTargetObject(this);            // Set the target animation
-  animation_.setPropertyName("popupOpacity");  //
+  animation_.setTargetObject(this);              // Set the target animation
+  animation_.setPropertyName("popup_opacity_");  //
   connect(&animation_, &QAbstractAnimation::finished, this,
           &MediaStatusNotification::hide);
 
