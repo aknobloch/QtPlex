@@ -53,9 +53,9 @@ void ApplicationWindow::setHelpWindow() {
   setCentralWidget(help_view.release());
 }
 
-void ApplicationWindow::initializeWebEngineView(QString serverAddress) {
+void ApplicationWindow::initializeWebEngineView(QString server_address) {
   auto page = std::make_unique<PlexWebPage>();
-  page->setUrl(QUrl(serverAddress));
+  page->setUrl(QUrl(server_address));
 
   web_engine_view_ = std::make_unique<QWebEngineView>();
   web_engine_view_->setPage(page.release());
