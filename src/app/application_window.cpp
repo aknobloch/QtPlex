@@ -78,9 +78,9 @@ void ApplicationWindow::showSettingsDialog() {
   SettingsDialog options;
   options.exec();
 
-  QString newServerAddress = settings.value(kServerAddressKey).toString();
+  QString new_server_address = settings.value(kServerAddressKey).toString();
   bool user_changed_server_address =
-      old_server_address.compare(newServerAddress) != 0;
+      old_server_address.compare(new_server_address) != 0;
 
   if (showingHelpScreen() || user_changed_server_address) {
     initializeCentralWidget();

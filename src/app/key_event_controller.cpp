@@ -25,12 +25,12 @@ KeyEventController::KeyEventController() {
   connect(media_next_hotkey_.get(), &QHotkey::activated, this,
           &KeyEventController::nextKeyActivated);
 
-  bool allKeysRegistered = media_stop_hotkey_->isRegistered() &&
-                           media_prev_hotkey_->isRegistered() &&
-                           media_play_hotkey_->isRegistered() &&
-                           media_next_hotkey_->isRegistered();
+  bool all_keys_registered = media_stop_hotkey_->isRegistered() &&
+                             media_prev_hotkey_->isRegistered() &&
+                             media_play_hotkey_->isRegistered() &&
+                             media_next_hotkey_->isRegistered();
 
-  qInfo() << "Hotkeys registered: " << allKeysRegistered;
+  qInfo() << "Hotkeys registered: " << all_keys_registered;
 }
 
 KeyEventController::~KeyEventController() = default;
