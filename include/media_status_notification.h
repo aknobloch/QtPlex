@@ -11,7 +11,7 @@
 // Credit to https://evileg.com/en/post/146/
 class MediaStatusNotification : public QWidget {
   Q_OBJECT
-  Q_PROPERTY(float popupOpacity READ getPopupOpacity WRITE setPopupOpacity)
+  Q_PROPERTY(float popup_opacity_ READ getPopupOpacity WRITE setPopupOpacity)
 
   void setPopupOpacity(float opacity);
   float getPopupOpacity() const;
@@ -33,11 +33,11 @@ class MediaStatusNotification : public QWidget {
   void setPopupText(const QString &text);
 
  private:
-  QLabel label;
-  QGridLayout layout;
-  QPropertyAnimation animation;
-  float popupOpacity;
-  std::unique_ptr<QTimer> timer;
+  QLabel label_;
+  QGridLayout layout_;
+  QPropertyAnimation animation_;
+  float popup_opacity_;
+  std::unique_ptr<QTimer> timer_;
 };
 
 #endif  // POPUP_H
