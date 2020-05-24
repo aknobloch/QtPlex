@@ -1,5 +1,5 @@
-#ifndef POPUP_H
-#define POPUP_H
+#ifndef MEDIASTATUSNOTIFICATION_H
+#define MEDIASTATUSNOTIFICATION_H
 
 #include <QGridLayout>
 #include <QLabel>
@@ -40,4 +40,4 @@ class MediaStatusNotification : public QWidget {
   std::unique_ptr<QTimer> timer_;
 };
 
-#endif  // POPUP_H
+#endif  // MEDIASTATUSNOTIFICATION_H

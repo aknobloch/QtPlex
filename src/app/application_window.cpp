@@ -7,8 +7,9 @@
 #include <Qt>
 #include <QtWebEngine/QtWebEngine>
 
-#include "config_server_help.h"
 #include "constants.h"
+#include "file_loader.h"
+#include "first_time_setup_widget.h"
 #include "key_event_controller.h"
 #include "plex_web_page.h"
 #include "settings_dialog.h"
@@ -24,10 +25,10 @@ ApplicationWindow::ApplicationWindow() {
 ApplicationWindow::~ApplicationWindow() = default;
 
 void ApplicationWindow::initializeMenuBar() {
-  std::unique_ptr<QMenu> file = std::make_unique<QMenu>("File");
+  std::unique_ptr<QMenu> file = std::make_unique<QMenu>(kAppName + " Menu");
   file->addAction("Settings", this, &ApplicationWindow::showSettingsDialog);
 
-  menuBar()->setStyleSheet("background-color:rgb(244,244,244)");
+  menuBar()->setStyleSheet(FileLoader::loadCSSByName(kCSSFileTitleBar));
   menuBar()->addMenu(file.release());
 }
 

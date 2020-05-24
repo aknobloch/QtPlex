@@ -1,5 +1,5 @@
-#ifndef OPTIONSDIALOG_H
-#define OPTIONSDIALOG_H
+#ifndef SETTINGSDIALOG_H
+#define SETTINGSDIALOG_H
 
 #include <QDialog>
 #include <QFormLayout>
@@ -22,4 +22,4 @@ class SettingsDialog : public QDialog {
   void okPressed();
 };
 
-#endif  // OPTIONSDIALOG_H
+#endif  // SETTINGSDIALOG_H

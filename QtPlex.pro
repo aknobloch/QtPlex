@@ -17,8 +17,8 @@ QT += gui x11extras
 QMAKE_CXXFLAGS += -std=c++17
 SOURCES += \
     src/app/application_window.cpp \
-    src/app/config_server_help.cpp \
-    src/app/javascript_loader.cpp \
+    src/app/file_loader.cpp \
+    src/app/first_time_setup_widget.cpp \
     src/app/key_event_controller.cpp \
     src/app/main.cpp \
     src/app/media_status_notification.cc \
@@ -34,8 +34,8 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x050100
 INCLUDEPATH += "include"
 HEADERS += \
     include/application_window.h \
-    include/config_server_help.h \
-    include/javascript_loader.h \
+    include/file_loader.h \
+    include/first_time_setup_widget.h \
     include/key_event_controller.h \
     include/media_status_notification.h \
     include/plex_web_page.h \
@@ -48,8 +48,8 @@ HEADERS += \
 RESOURCES += \
     resources.qrc
 
-# Add the JavaScript source files and Resources to build output
-include_extras.commands = $(COPY_DIR) $$PWD/src/js $$OUT_PWD && $(COPY_DIR) $$PWD/res $$OUT_PWD
+# Add the JavaScript source files, CSS source files and Static Resources to build output
+include_extras.commands = $(COPY_DIR) $$PWD/src/js $$OUT_PWD && $(COPY_DIR) $$PWD/src/css $$OUT_PWD && $(COPY_DIR) $$PWD/res $$OUT_PWD
 
 #############################################
 #       Build Configurations

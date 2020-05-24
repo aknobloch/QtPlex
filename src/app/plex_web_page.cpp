@@ -5,7 +5,7 @@
 #include <QWebEngineScript>
 
 #include "constants.h"
-#include "javascript_loader.h"
+#include "file_loader.h"
 
 PlexWebPage::PlexWebPage() {
   if (kLogJavascriptConsole == false) {
@@ -63,7 +63,7 @@ void PlexWebPage::loadAndRunScript(QString script_name) {
     }
   };
 
-  QString js_function = JavaScriptLoader::loadScriptByName(script_name);
+  QString js_function = FileLoader::loadJavascriptByName(script_name);
   this->runJavaScript(js_function, QWebEngineScript::ApplicationWorld,
                       validate_execution_callback);
 }

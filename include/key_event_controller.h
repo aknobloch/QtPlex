@@ -1,5 +1,5 @@
-#ifndef KEYEVENTTHREAD_H
-#define KEYEVENTTHREAD_H
+#ifndef KEYEVENTCONTROLLER_H
+#define KEYEVENTCONTROLLER_H
 
 #include <QHotkey>
 #include <QObject>
@@ -32,4 +32,4 @@ class KeyEventController : public QObject {
   void nextPressed();
 };
 
-#endif  // KEYEVENTTHREAD_H
+#endif  // KEYEVENTCONTROLLER_H

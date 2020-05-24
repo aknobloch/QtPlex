@@ -1,5 +1,5 @@
-#ifndef HELPWIDGET_H
-#define HELPWIDGET_H
+#ifndef FIRSTTIMESETUPWIDGET_H
+#define FIRSTTIMESETUPWIDGET_H
 
 #include <QLabel>
 #include <QPushButton>
@@ -27,4 +27,4 @@ class FirstTimeSetupWidget : public QWidget {
   void configButtonPressed();
 };
 
-#endif  // HELPWIDGET_H
+#endif  // FIRSTTIMESETUPWIDGET_H

@@ -9,6 +9,8 @@ static const QString kServerAddressKey = "ServerAddress";
 static const bool kLogJavascriptConsole = false;
 // the tag that is expected to be present on JS logs from us
 static const QString kJavascriptQtPlexTag = "[QtPlex]";
+static const QString kJavascriptDir = "/js/";
+static const QString kCSSDir = "/css/";
 static const int kMaxNotificationLineLength = 30;
 static const int kFailureExitCode = 1;
 static const QString kJSFileCommonLibrary = "common_library.js";
@@ -16,5 +18,6 @@ static const QString kJSFileExecuteForward = "execute_forward.js";
 static const QString kJSFileExecutePlayPause = "execute_play_pause.js";
 static const QString kJSFileExecutePrevious = "execute_previous.js";
 static const QString kJSFileExecuteStop = "execute_stop.js";
+static const QString kCSSFileTitleBar = "titleBar.css";
 
 #endif  // CONSTANTS_H

@@ -1,4 +1,4 @@
-#include "config_server_help.h"
+#include "first_time_setup_widget.h"
 
 #include <QDebug>
 #include <QLabel>
