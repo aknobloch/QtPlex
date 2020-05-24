@@ -1,6 +1,8 @@
 #include "settings_dialog.h"
 
+#include <QApplication>
 #include <QDebug>
+#include <QDesktopWidget>
 #include <QDialogButtonBox>
 #include <QFormLayout>
 #include <QLabel>
@@ -28,7 +30,9 @@ void SettingsDialog::initializeLayout() {
   box_container_layout_->addWidget(confirm_button.release());
 
   setLayout(box_container_layout_.get());
-  resize(325, 50);
+
+  QRect screen_size = QDesktopWidget().availableGeometry(this);
+  resize(screen_size.width() / 3, screen_size.height() / 3);
 }
 
 std::unique_ptr<QFormLayout> SettingsDialog::createServerInfoForm() {
