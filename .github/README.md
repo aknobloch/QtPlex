@@ -38,7 +38,7 @@ Workaround:
 5. If problems persist, look through the settings in step two and validate nothing is bound to suspicious `XF86Audio*`keys.
 
 ### Proprietary Codecs
-In order to enable full functionality of the Plex web app (video and particular audio), some proprietary codecs need to be available to the QtWebEngine. Unfortunately, due to licensing, these cannot be packaged with the Qt libraries, or through this application. As such, you'll need to build the QtWebEngine from source. You can find more information on building QtWebEngine from source [here](http://wiki.qt.io/QtWebEngine/How_to_Try). Before running the `qmake` command in that guide, you'll need to enable the proprietary codecs using the `--webengine-proprietary-codecs` flag. More information on that can be found [here](https://doc.qt.io/qt-5.11/qtwebengine-features.html). 
+In order to enable full functionality of the Plex web app (video and particular audio), some proprietary codecs need to be available to the QtWebEngine. Unfortunately, due to licensing, these cannot be packaged with the Qt libraries, or through this application. As such, you'll need to build the QtWebEngine from source. You can find more information on building QtWebEngine from source [here](http://wiki.qt.io/QtWebEngine/How_to_Try). Before running the `qmake` command in that guide, you'll need to enable the proprietary codecs using the `--webengine-proprietary-codecs` flag. For example, `qmake -r -- --webengine-proprietary-codecs`. More information on that can be found [here](https://doc.qt.io/qt-5.11/qtwebengine-features.html). 
 
 ------
 ## Acknowledgments
