@@ -9,7 +9,10 @@ QtPlex provides a Linux-first solution for streaming Plex media. The application
 * Accessible server running Plex. 
 ### Installation
 1. Install QtCreator. If you are an individual developer, you can use [the free, open source installation](https://www.qt.io/download-open-source).
-2. Install the libraries needed for QtPlex: `sudo apt-get install qtwebengine5-dev qtdeclarative5-dev libqt5x11extras5-dev libfontconfig1-dev libfreetype6-dev libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libx11-xcb-dev libxcb-glx0-dev libxkbcommon-x11-dev`
+2. Install the libraries needed for QtPlex:  
+```
+$ sudo apt-get install qtwebengine5-dev qtdeclarative5-dev libqt5x11extras5-dev libfontconfig1-dev libfreetype6-dev libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libx11-xcb-dev libxcb-glx0-dev libxkbcommon-x11-dev`
+```
 2. Open the QtPlex.pro file in QtCreator, then build/run.
 3. [Optional] Add a desktop file for launching:
 ```
